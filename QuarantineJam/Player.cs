@@ -25,7 +25,7 @@ namespace QuarantineJam
 
         new public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
-            idle = new Sprite(Content.Load<Texture2D>("template"));
+            idle = new Sprite(2, 193, 168, 350, Content.Load<Texture2D>("player_idle"));
         }
         public Player():base(new Vector2(50, 50), new Vector2(0,0))
         {
