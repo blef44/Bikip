@@ -85,8 +85,8 @@ namespace QuarantineJam
 #endif
             Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(CameraPosition.X, CameraPosition.Y, 0);
             
-            player.Update(gameTime, world);
-            world.Update(gameTime);
+            player.Update(gameTime, world, player);
+            world.Update(gameTime, player);
             Input.Update(Keyboard.GetState());
             base.Update(gameTime);
         }

@@ -47,6 +47,7 @@ namespace QuarantineJam
                     stuff.Add(new Bee(new Vector2(1300, 400)));
                     stuff.Add(new Bee(new Vector2(1300, 400)));
                     stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Ruche(new Vector2(500, 0), 250));
                     foreach (PhysicalObject o in stuff)
                     {
                         o.FeetPosition += new Vector2(random.Next(-2, 2), random.Next(-2, 2));

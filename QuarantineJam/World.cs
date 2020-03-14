@@ -16,7 +16,7 @@ namespace QuarantineJam
         //public static Sprite pipe_texture;
         private Random r;
         private Player saved_player;
-        public List<PhysicalObject> Stuff;
+        public List<PhysicalObject> Stuff, NewStuff;
         public static Texture2D texture;
 
            
@@ -29,6 +29,7 @@ namespace QuarantineJam
             
             LoadedWorldHitbox = new List<Rectangle>() { };
             Stuff = new List<PhysicalObject>();
+            NewStuff = new List<PhysicalObject>();
             Level.InitLevel(0, LoadedWorldHitbox, Stuff);
         }
 
@@ -38,9 +39,11 @@ namespace QuarantineJam
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Player player)
         {
-            foreach (PhysicalObject p in Stuff) p.Update(gameTime, this);
+            foreach (PhysicalObject p in NewStuff) Stuff.Add(p);
+            NewStuff.Clear();
+            foreach (PhysicalObject p in Stuff) p.Update(gameTime, this, player);
         }
 
         public void Draw(SpriteBatch spriteBatch)

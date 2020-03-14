@@ -51,7 +51,7 @@ namespace QuarantineJam
             prevKbState = new KeyboardState();
         }
 
-        public override void Update(GameTime gameTime, World world)
+        public override void Update(GameTime gameTime, World world, Player player)
         {
             this.world = world;
             KeyboardState KbState = Keyboard.GetState();
@@ -200,7 +200,7 @@ namespace QuarantineJam
                 world.Stuff.Remove(BeeToRemove);
 
             prevKbState = KbState;
-            base.Update(gameTime, world);
+            base.Update(gameTime, world, this);
 
         }
 

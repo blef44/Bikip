@@ -20,7 +20,7 @@ namespace QuarantineJam
         internal Rectangle Hurtbox;
         internal Vector2 HurtboxSize;
         internal Sprite PreviousSprite, CurrentSprite;
-        public static Sprite bee;
+        public static Sprite bee, ruche1, ruche2, ruche3;
         internal int SpriteFrames = 0;
         internal static Random r = new Random();
         internal float WallBounceFactor, GroundBounceFactor = 0f, GroundFriction, AirFriction = 1f, Gravity, XTreshold = 0.1f;
@@ -28,7 +28,10 @@ namespace QuarantineJam
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
-         bee = new Sprite(4, 69, 59, 100, Content.Load<Texture2D>("bee"));
+            bee = new Sprite(4, 69, 59, 100, Content.Load<Texture2D>("bee"));
+            ruche1 = new Sprite(Content.Load<Texture2D>("ruche1"));
+            ruche2 = new Sprite(Content.Load<Texture2D>("ruche2"));
+            ruche3 = new Sprite(Content.Load<Texture2D>("ruche3"));
         }
         public PhysicalObject(Vector2 HurtboxSize, Vector2 FeetPosition, bool isParticle = false)
         {
@@ -50,7 +53,8 @@ namespace QuarantineJam
             Hurtbox.Y = (int)Math.Floor(FeetPosition.Y - HurtboxSize.Y);
             Hurtbox.Height = (int)Math.Floor(HurtboxSize.Y);
         }
-        public virtual void Update(GameTime gameTime, World world)
+
+        public virtual void Update(GameTime gameTime, World world, Player player)
         {
             lifetime += 1;
 
@@ -138,6 +142,17 @@ namespace QuarantineJam
             Rectangle moved_rectangle = OtherObjectHurtbox;
             moved_rectangle.Offset(OtherObjectVelocity);
             return moved_rectangle.Intersects(Hurtbox);
+        }
+
+        public void Bump(PhysicalObject bumper)
+        {
+            Vector2 Knockback = new Vector2();
+            Knockback = new Vector2(Hurtbox.Center.X - bumper.Hurtbox.Center.X, Math.Min(Hurtbox.Center.Y, bumper.Hurtbox.Center.Y) - bumper.Hurtbox.Center.Y);
+            if (Knockback == new Vector2(0, 0)) Knockback = new Vector2(0, -1);
+            Knockback.Normalize();
+            Knockback *= 10;
+            //if (!world.CheckCollision(Hurtbox, Knockback)) 
+                Velocity = Knockback;
         }
 
         public void SpawnDebris(Sprite sprite,Vector2 Direction, int Quantity = 3, float Gravity = 1.1f, int DisplayFrames = 40)
