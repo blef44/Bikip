@@ -11,6 +11,7 @@ namespace QuarantineJam
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        public static Texture2D rectangle; // used for debug
 
         World world;
         Player player;
@@ -47,6 +48,7 @@ namespace QuarantineJam
             spriteBatch = new SpriteBatch(GraphicsDevice);
             World.LoadContent(Content);
             Player.LoadContent(Content);
+            rectangle = Content.Load<Texture2D>("texture_chelou");
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,7 +71,7 @@ namespace QuarantineJam
 
             player.Update(gameTime, world);
             world.Update(gameTime);
-
+            Input.Update(Keyboard.GetState());
             base.Update(gameTime);
         }
 
@@ -88,6 +90,12 @@ namespace QuarantineJam
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangleToDraw, Color color, Texture2D texture = null)
+        {
+            if (texture == null) texture = rectangle;
+            spriteBatch.Draw(texture, rectangleToDraw, texture.Bounds, color, 0f, Vector2.Zero, default, default);
         }
     }
 }

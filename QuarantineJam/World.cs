@@ -17,6 +17,7 @@ namespace QuarantineJam
         private Random r;
         private Player saved_player;
         public List<PhysicalObject> Stuff;
+        public static Texture2D texture;
 
            
 
@@ -33,7 +34,7 @@ namespace QuarantineJam
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
-            
+            texture = Content.Load<Texture2D>("texture");
         }
 
 
@@ -44,10 +45,20 @@ namespace QuarantineJam
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            List<Rectangle> InteriorDisplay = new List<Rectangle>() { };
+            foreach (Rectangle r in LoadedWorldHitbox) Game1.DrawRectangle(spriteBatch, r, Color.Black);
+            foreach (Rectangle r in LoadedWorldHitbox)
+            {
+                Rectangle rect = r;
+                rect.Inflate(-2, -2);
+                InteriorDisplay.Add(rect);
+            }
+            foreach (Rectangle r in InteriorDisplay) Game1.DrawRectangle(spriteBatch, r, Color.White, texture);
 
+            foreach (PhysicalObject p in Stuff) p.Draw(spriteBatch);
         }
 
-       
+
         public bool CheckCollision(Rectangle rectangle, Vector2 movement)
         {
             Rectangle moved_rectangle = rectangle;

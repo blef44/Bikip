@@ -13,8 +13,8 @@ namespace QuarantineJam
 {
     public class Player : PhysicalObject
     {
-        private const float MaxSpeed = 10;
-        static Sprite idle;
+        private const float MaxSpeed = 15;
+        static Sprite idle, run, brake;
         //static SoundEffect ;
         public enum PlayerState { idle, walk, jump } //etc
         public PlayerState CurrentState, PreviousState;
@@ -29,6 +29,8 @@ namespace QuarantineJam
         new public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             idle = new Sprite(2, 193, 168, 350, Content.Load<Texture2D>("player_idle"));
+            run = new Sprite(5, 193, 168, 100, Content.Load<Texture2D>("player_run"));
+            brake = new Sprite(Content.Load<Texture2D>("brake"));
         }
         public Player():base(new Vector2(50, 50), new Vector2(0,0))
         {
@@ -49,8 +51,6 @@ namespace QuarantineJam
             this.world = world;
             KeyboardState KbState = Keyboard.GetState();
 
-            CurrentSprite = idle;
-
             if (PreviousState == CurrentState) state_frames += 1;
             else state_frames = 0;
             PreviousState = CurrentState;
@@ -69,8 +69,7 @@ namespace QuarantineJam
                             ApplyForce(new Vector2(2f, 0));
                         CurrentState = PlayerState.walk;
                     }*/
-                    if (KbState.IsKeyDown(Input.Left) || KbState.IsKeyDown(Input.Right))
-                        CurrentState = PlayerState.walk;
+                    if (IsOnGround(world) && Input.direction != 0) CurrentState = PlayerState.walk;
                     else if (KbState.IsKeyDown(Input.Jump))
                     {
                         ApplyForce(new Vector2(0, -10f));
@@ -78,38 +77,35 @@ namespace QuarantineJam
                     }
                     break;
                 case PlayerState.walk:
-                    if (KbState.IsKeyDown(Input.Left) && KbState.IsKeyUp(Input.Right))
-                    {
-                        if (Velocity.X > -MaxSpeed)
-                            ApplyForce(new Vector2(-1.5f, 0));
-                        CurrentState = PlayerState.walk;
-                    }
-                    else if (KbState.IsKeyDown(Input.Right))
-                    {
-                        if (Velocity.X < MaxSpeed)
-                            ApplyForce(new Vector2(1.5f, 0));
-                        CurrentState = PlayerState.walk;
-                    }
                     if (KbState.IsKeyDown(Input.Jump))
                     {
                         ApplyForce(new Vector2(0, -10f));
                         CurrentState = PlayerState.jump;
                     }
-                    if (Velocity.Length() < 0.001)
-                        CurrentState = PlayerState.idle;
+                    else if (Input.direction != 0) // player is inputing a direction (either left or right)
+                    {
+                        PlayerDirection = Input.direction;
+                        if (Math.Sign(Velocity.X) * Math.Sign(Input.direction) >= 0) // if inputed direction is the same as current movement direction
+                        {
+                            if(Velocity.X * Velocity.X < MaxSpeed * MaxSpeed) // if norm of velocity below max speed
+                                ApplyForce(new Vector2(Input.direction * 2f, 0));
+                        }
+                        else // if player is inputing the direction against the current movement (brake)
+                            ApplyForce(new Vector2(Input.direction * 5f, 0));
+                    }
+                    else CurrentState = PlayerState.idle;
                     break;
+
                 case PlayerState.jump:
                     if (KbState.IsKeyDown(Input.Left) && KbState.IsKeyUp(Input.Right))
                     {
                         if (Velocity.X > -MaxSpeed)
                             ApplyForce(new Vector2(-0.5f, 0));
-                        CurrentState = PlayerState.walk;
                     }
                     else if (KbState.IsKeyDown(Input.Right))
                     {
                         if (Velocity.X < MaxSpeed)
                             ApplyForce(new Vector2(0.5f, 0));
-                        CurrentState = PlayerState.walk;
                     }
                     if (IsOnGround(world))
                         CurrentState = PlayerState.idle;
@@ -121,7 +117,17 @@ namespace QuarantineJam
             PreviousSprite = CurrentSprite;
             switch (CurrentState)
             {
-
+                case (PlayerState.idle):
+                    {
+                        if (Velocity.X * Velocity.X < 1) CurrentSprite = idle;
+                        else CurrentSprite = brake;
+                        break;
+                    }
+                case (PlayerState.walk):
+                    {
+                        CurrentSprite = run;
+                        break;
+                    }
             }
 
             /*if (Input.double_tap_waiting && IsOnGround(world) && CurrentSprite != slug_walk)
@@ -148,7 +154,6 @@ namespace QuarantineJam
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            idle.DrawFromFeet(spriteBatch, FeetPosition);
         }
 
         private void Death()
