@@ -98,7 +98,7 @@ namespace MaskGame
         public void Draw(SpriteBatch spriteBatch, Vector2 Position) // Dessin du sprite depuis son centre
         {
 
-            spriteBatch.Draw(Texture, Position - Camera.TopLeftCameraPosition, Source, Color.White, angle, new Vector2(Texture.Width / 2, Texture.Height / 2), scale * Camera.Zoom, effects, 1f); // On remarque l'ajoute de l'argument Source qui corresponds à la zone de la spritesheet qu'on dessine (voir comment elle est sélectionnée plus bas)
+            spriteBatch.Draw(Texture, Position, Source, Color.White, angle, new Vector2(Texture.Width / 2, Texture.Height / 2), scale, effects, 1f); // On remarque l'ajoute de l'argument Source qui corresponds à la zone de la spritesheet qu'on dessine (voir comment elle est sélectionnée plus bas)
         }
 
         public void ScreenDraw(SpriteBatch spriteBatch, Vector2 Position) // Dessin du sprite avec la position sur l'écran
@@ -118,20 +118,20 @@ namespace MaskGame
             if (Angle == 0f) angle2 = angle;
             else angle2 = Angle;
             Vector2 FeetRelativePosition = new Vector2(-0.5f * frameWidth, -frameHeight);
-            Vector2 display_position = (FeetPosition + scale * FeetRelativePosition - Camera.TopLeftCameraPosition) * Camera.Zoom;
-            spriteBatch.Draw(Texture, display_position, Source, Color.White * Opacity * opacity, angle2, Vector2.Zero, scale * Camera.Zoom, effects, 1f); // on obtient le point en haut à gauche à partir de la position des pieds
+            Vector2 display_position = FeetPosition + scale * FeetRelativePosition;
+            spriteBatch.Draw(Texture, display_position, Source, Color.White * Opacity * opacity, angle2, Vector2.Zero, scale, effects, 1f); // on obtient le point en haut à gauche à partir de la position des pieds
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 Position, Rectangle Source) // Pour dessiner une partie d'une image fixe. La position = la position du centre de l'image
         {
-            Vector2 display_position = Camera.TopLeftCameraPosition * (Position + scale * new Vector2(frameWidth / 2, frameHeight / 2) - Camera.TopLeftCameraPosition);
-            spriteBatch.Draw(Texture, display_position, Source, Color.White, 0f, new Vector2(0, 0), scale * Camera.Zoom, effects, 1f);
+            Vector2 display_position = Position + scale * new Vector2(frameWidth / 2, frameHeight / 2);
+            spriteBatch.Draw(Texture, display_position, Source, Color.White, 0f, new Vector2(0, 0), scale, effects, 1f);
         }
 
         public void TopLeftDraw(SpriteBatch spriteBatch, Vector2 Position, float Opacity = 1f) // Pour dessiner une partie d'une image, en donnant sa position d'affichage en haut à droite
         {
-            Vector2 display_position = (Position - Camera.TopLeftCameraPosition) * Camera.Zoom;
-           spriteBatch.Draw(Texture, display_position, Source, Color.White * Opacity, 0f, new Vector2(0, 0), scale * Camera.Zoom, effects, 1f);
+            Vector2 display_position = Position;
+           spriteBatch.Draw(Texture, display_position, Source, Color.White * Opacity, 0f, new Vector2(0, 0), scale, effects, 1f);
         }
 
         public void UpdateFrame(GameTime gameTime) // Pour décider quelle frame on affiche
