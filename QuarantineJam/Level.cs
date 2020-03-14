@@ -17,6 +17,7 @@ namespace QuarantineJam
             {
                 case 0:
                     worldHitbox.Add(r(0,500,1000,300));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
                     break;
             }
         }

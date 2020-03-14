@@ -40,7 +40,7 @@ namespace QuarantineJam
 
         public void Update(GameTime gameTime)
         {
-
+            foreach (PhysicalObject p in Stuff) p.Update(gameTime, this);
         }
 
         public void Draw(SpriteBatch spriteBatch)
