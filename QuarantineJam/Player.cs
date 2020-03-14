@@ -29,7 +29,7 @@ namespace QuarantineJam
         new public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             idle = new Sprite(2, 193, 168, 350, Content.Load<Texture2D>("player_idle"));
-            run = new Sprite(5, 193, 168, 100, Content.Load<Texture2D>("player_run"));
+            run = new Sprite(5, 193, 168, 70, Content.Load<Texture2D>("player_run"));
             brake = new Sprite(Content.Load<Texture2D>("brake"));
         }
         public Player():base(new Vector2(50, 50), new Vector2(0,0))
@@ -97,15 +97,15 @@ namespace QuarantineJam
                     break;
 
                 case PlayerState.jump:
-                    if (KbState.IsKeyDown(Input.Left) && KbState.IsKeyUp(Input.Right))
+                    if (Input.direction != 0) // player is inputing a direction (either left or right)
                     {
-                        if (Velocity.X > -MaxSpeed)
-                            ApplyForce(new Vector2(-0.5f, 0));
-                    }
-                    else if (KbState.IsKeyDown(Input.Right))
-                    {
-                        if (Velocity.X < MaxSpeed)
-                            ApplyForce(new Vector2(0.5f, 0));
+                        if (Math.Sign(Velocity.X) * Math.Sign(Input.direction) >= 0) // if inputed direction is the same as current movement direction
+                        {
+                            if (Velocity.X * Velocity.X < 5) // if norm of velocity below max air speed
+                                ApplyForce(new Vector2(Input.direction * 2f, 0));
+                        }
+                        else // if player is inputing the direction against the current movement (brake)
+                            ApplyForce(new Vector2(Input.direction * 2f, 0));
                     }
                     if (IsOnGround(world))
                         CurrentState = PlayerState.idle;
