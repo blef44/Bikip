@@ -74,6 +74,21 @@ namespace QuarantineJam
             }
             return collision;
         }
+
+        public List<Rectangle> CheckCollisionReturnRectangleList(Rectangle rectangle, Vector2 movement)
+        {
+            List<Rectangle> CollisionRectangles = new List<Rectangle>() { };
+            Rectangle moved_rectangle = rectangle;
+            moved_rectangle.Offset(movement);
+            foreach (Rectangle r in this.LoadedWorldHitbox)
+            {
+                if (moved_rectangle.Intersects(r))
+                {
+                    CollisionRectangles.Add(r);
+                }
+            }
+            return CollisionRectangles;
+        }
         public bool CheckCollision(Vector2 FeetPosition, Vector2 Size)
         {
             Rectangle new_rectangle = new Rectangle();

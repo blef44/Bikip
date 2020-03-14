@@ -13,12 +13,13 @@ namespace QuarantineJam
 {
     public class Player : PhysicalObject
     {
-        private const float MaxSpeed = 15;
+        private const float MaxSpeed = 11;
         static Sprite idle, run, brake, fall, rise, roll;
         //static SoundEffect ;
         public enum PlayerState { idle, walk, jump, doublejump } //etc
         public PlayerState CurrentState, PreviousState;
         public int state_frames;
+        private List<Rectangle> LandingGroundCandidate;
         World world;
         Random random = new Random();
 
@@ -41,8 +42,9 @@ namespace QuarantineJam
             CurrentState = PlayerState.idle;
             WallBounceFactor = 0f;
             GroundBounceFactor = 0f;
-            GroundFriction = 0.8f;
+            GroundFriction = 0.85f;
             Gravity = 0.5f;
+            AirFriction = 0.8f;
 
             Velocity = new Vector2(0, 0);
             PlayerDirection = 1;
@@ -77,6 +79,7 @@ namespace QuarantineJam
                     else if (KbState.IsKeyDown(Input.Jump))
                     {
                         ApplyForce(new Vector2(0, -15f));
+                        if (Input.direction != 0) PlayerDirection = Input.direction;
                         CurrentState = PlayerState.jump;
                     }
                     break;
@@ -84,6 +87,7 @@ namespace QuarantineJam
                     if (KbState.IsKeyDown(Input.Jump))
                     {
                         // Velocity = 0;
+                        if (Input.direction != 0) PlayerDirection = Input.direction;
                         ApplyForce(new Vector2(0, -15f));
                         CurrentState = PlayerState.jump;
                     }
@@ -94,7 +98,7 @@ namespace QuarantineJam
                         if (Math.Sign(Velocity.X) * Math.Sign(Input.direction) >= 0) // if inputed direction is the same as current movement direction
                         {
                             if (Velocity.X * Velocity.X < MaxSpeed * MaxSpeed) // if norm of velocity below max speed
-                                ApplyForce(new Vector2(Input.direction * 2f, 0));
+                                ApplyForce(new Vector2(Input.direction * 5f, 0));
                         }
                         else // if player is inputing the direction against the current movement (brake)
                             ApplyForce(new Vector2(Input.direction * 5f, 0));
@@ -105,42 +109,30 @@ namespace QuarantineJam
                 case PlayerState.jump:
                     if (KbState.IsKeyDown(Input.Jump) && !prevKbState.IsKeyDown(Input.Jump))
                     {
-                        Velocity = new Vector2(0, 0);
-                        if (Input.direction == 0) ApplyForce(new Vector2(0, -15));
-                        else
-                        {
-                            PlayerDirection = Input.direction;
-                            ApplyForce(new Vector2(Input.direction * 10, -10));
-                        }
+                        Velocity.Y = 0;
+                        //if (Input.direction == 0) 
+                            ApplyForce(new Vector2(0, -15));
+                        //else
+                        //{
+                          //  PlayerDirection = Input.direction;
+                          //  ApplyForce(new Vector2(Input.direction * 50, -8));
+                      //  }
                         CurrentState = PlayerState.doublejump;
                     }
                     else if (Input.direction != 0) // player is inputing a direction (either left or right)
                     {
-                        if (Math.Sign(Velocity.X) * Math.Sign(Input.direction) >= 0) // if inputed direction is the same as current movement direction
-                        {
-                            if (Velocity.X * Velocity.X < 5) // if norm of velocity below max air speed
-                                ApplyForce(new Vector2(Input.direction * 2f, 0));
-                        }
-                        else // if player is inputing the direction against the current movement (brake)
-                            ApplyForce(new Vector2(Input.direction * 2f, 0));
+                        if ((Velocity.X + Input.direction) * Math.Sign(Velocity.X) <= MaxSpeed) ApplyForce(new Vector2(Input.direction * 5f, 0));
                     }
                     if (IsOnGround(world))
                         CurrentState = PlayerState.idle;
                     break;
                 case (PlayerState.doublejump):
                 {
-                        if (Input.direction != 0) // player is inputing a direction (either left or right)
+                        if (IsOnGround(world)) CurrentState = PlayerState.idle;
+                        else if (Input.direction != 0) // player is inputing a direction (either left or right)
                         {
-                            if (Math.Sign(Velocity.X) * Math.Sign(Input.direction) >= 0) // if inputed direction is the same as current movement direction
-                            {
-                                if (Velocity.X * Velocity.X < 5) // if norm of velocity below max air speed
-                                    ApplyForce(new Vector2(Input.direction * 2f, 0));
-                            }
-                            else // if player is inputing the direction against the current movement (brake)
-                                ApplyForce(new Vector2(Input.direction * 2f, 0));
+                            if ((Velocity.X + Input.direction) * Math.Sign(Velocity.X) <= MaxSpeed) ApplyForce(new Vector2(Input.direction * 5f, 0));
                         }
-                        if (IsOnGround(world))
-                            CurrentState = PlayerState.idle;
                         break;
                 }
             }
@@ -215,6 +207,47 @@ namespace QuarantineJam
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+        }
+
+        public override void CheckCollisions(World world)
+        {
+            
+            Vector2 IntVelocity = Velocity;
+            if (IntVelocity.Y > 0) IntVelocity.Y = (float)Math.Ceiling(IntVelocity.Y);
+            if (IntVelocity.X > 0) IntVelocity.X = (float)Math.Ceiling(IntVelocity.X);
+            if (IntVelocity.Y < 0) IntVelocity.Y = (float)Math.Floor(IntVelocity.Y);
+            if (IntVelocity.X < 0) IntVelocity.X = (float)Math.Floor(IntVelocity.X);
+            groundcollision = false;
+
+
+           if (world.CheckCollision(Hurtbox, new Vector2(0, IntVelocity.Y))) // Check collision with the world
+            {
+                groundcollision = true;
+                LandingGroundCandidate = world.CheckCollisionReturnRectangleList(Hurtbox, new Vector2(0, IntVelocity.Y));
+                
+            }
+            if (groundcollision)
+            {
+                Velocity.Y = 0;
+                Rectangle HigherTopRectangle = LandingGroundCandidate[0];
+                foreach (Rectangle r in LandingGroundCandidate) if(r.Top < HigherTopRectangle.Top) HigherTopRectangle = r;
+                if (!world.CheckCollision(Hurtbox, new Vector2(0, HigherTopRectangle.Top - FeetPosition.Y))) FeetPosition.Y += HigherTopRectangle.Y - FeetPosition.Y;
+            }
+            FeetPosition.Y += Velocity.Y; // Apply Y movement
+            Hurtbox.Y = (int)Math.Floor(FeetPosition.Y - HurtboxSize.Y);
+            Hurtbox.Height = (int)Math.Floor(HurtboxSize.Y);
+
+            wallcollision = false;
+            if (world.CheckCollision(Hurtbox, new Vector2(IntVelocity.X, 0)))// Collision X with the world
+            {
+                wallcollision = true;
+            }
+            if (wallcollision) Velocity.X = -WallBounceFactor * Velocity.X;
+
+            FeetPosition.X += Velocity.X;
+            Hurtbox.X = (int)Math.Floor(FeetPosition.X - HurtboxSize.X / 2);
+            Hurtbox.Width = (int)Math.Floor(HurtboxSize.X);
+            //base.CheckCollisions(world);
         }
 
         private void Death()
