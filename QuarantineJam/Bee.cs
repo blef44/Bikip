@@ -17,7 +17,7 @@ namespace QuarantineJam
         }
         public new static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
-            idle = new Sprite(Content.Load<Texture2D>("bee_draft"));
+            idle = new Sprite(4, 69, 59, 100, Content.Load<Texture2D>("bee"));
         }
 
         public override void Update(GameTime gameTime, World world)

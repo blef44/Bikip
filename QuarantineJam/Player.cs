@@ -35,7 +35,7 @@ namespace QuarantineJam
             fall = new Sprite(Content.Load<Texture2D>("fall"));
             roll = new Sprite(3, 193 + 40, 168, 80, Content.Load<Texture2D>("roll"));
         }
-        public Player():base(new Vector2(50, 50), new Vector2(0,0))
+        public Player():base(new Vector2(40, 100), new Vector2(0,0))
         {
             FeetPosition = new Vector2(200, 200);
             CurrentState = PlayerState.idle;
