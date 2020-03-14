@@ -28,7 +28,7 @@ namespace QuarantineJam
             
             LoadedWorldHitbox = new List<Rectangle>() { };
             Stuff = new List<PhysicalObject>();
-            
+            Level.InitLevel(0, LoadedWorldHitbox, Stuff);
         }
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)

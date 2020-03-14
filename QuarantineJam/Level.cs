@@ -16,7 +16,7 @@ namespace QuarantineJam
             switch(level)
             {
                 case 0:
-                    //worldHitbox.Add();
+                    worldHitbox.Add(r(0,500,1000,300));
                     break;
             }
         }

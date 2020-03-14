@@ -34,7 +34,7 @@ namespace QuarantineJam
             WallBounceFactor = 0f;
             GroundBounceFactor = 0f;
             GroundFactor = 0.95f;
-            Gravity = 0f;
+            Gravity = 0.5f;
 
             Velocity = new Vector2(0, 0);
             PlayerDirection = 1;
