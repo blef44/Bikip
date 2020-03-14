@@ -58,15 +58,61 @@ namespace QuarantineJam
             switch (CurrentState)
             {
                 case PlayerState.idle:
-                    if (KbState.IsKeyDown(Input.Left) && KbState.IsKeyUp(Input.Right))
+                    /*if (KbState.IsKeyDown(Input.Left) && KbState.IsKeyUp(Input.Right))
                     {
                         if (Velocity.X > -MaxSpeed)
                             ApplyForce(new Vector2(-2f, 0));
+                        CurrentState = PlayerState.walk;
                     } else if (KbState.IsKeyDown(Input.Right))
                     {
                         if (Velocity.X < MaxSpeed)
                             ApplyForce(new Vector2(2f, 0));
+                        CurrentState = PlayerState.walk;
+                    }*/
+                    if (KbState.IsKeyDown(Input.Left) || KbState.IsKeyDown(Input.Right))
+                        CurrentState = PlayerState.walk;
+                    else if (KbState.IsKeyDown(Input.Jump))
+                    {
+                        ApplyForce(new Vector2(0, -10f));
+                        CurrentState = PlayerState.jump;
                     }
+                    break;
+                case PlayerState.walk:
+                    if (KbState.IsKeyDown(Input.Left) && KbState.IsKeyUp(Input.Right))
+                    {
+                        if (Velocity.X > -MaxSpeed)
+                            ApplyForce(new Vector2(-1.5f, 0));
+                        CurrentState = PlayerState.walk;
+                    }
+                    else if (KbState.IsKeyDown(Input.Right))
+                    {
+                        if (Velocity.X < MaxSpeed)
+                            ApplyForce(new Vector2(1.5f, 0));
+                        CurrentState = PlayerState.walk;
+                    }
+                    if (KbState.IsKeyDown(Input.Jump))
+                    {
+                        ApplyForce(new Vector2(0, -10f));
+                        CurrentState = PlayerState.jump;
+                    }
+                    if (Velocity.Length() < 0.001)
+                        CurrentState = PlayerState.idle;
+                    break;
+                case PlayerState.jump:
+                    if (KbState.IsKeyDown(Input.Left) && KbState.IsKeyUp(Input.Right))
+                    {
+                        if (Velocity.X > -MaxSpeed)
+                            ApplyForce(new Vector2(-0.5f, 0));
+                        CurrentState = PlayerState.walk;
+                    }
+                    else if (KbState.IsKeyDown(Input.Right))
+                    {
+                        if (Velocity.X < MaxSpeed)
+                            ApplyForce(new Vector2(0.5f, 0));
+                        CurrentState = PlayerState.walk;
+                    }
+                    if (IsOnGround(world))
+                        CurrentState = PlayerState.idle;
                     break;
             }
             //
