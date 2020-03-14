@@ -13,16 +13,12 @@ namespace QuarantineJam
         static Sprite idle;
         public Bee(Vector2 FeetPosition) : base(beeHurtboxSize, FeetPosition)
         {
-            
-        }
-        public new static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
-        {
-            idle = new Sprite(4, 69, 59, 100, Content.Load<Texture2D>("bee"));
+            CurrentSprite = new Sprite(bee);
         }
 
         public override void Update(GameTime gameTime, World world)
         {
-            CurrentSprite = idle;
+            CurrentSprite.UpdateFrame(gameTime);
             base.Update(gameTime, world);
         }
 

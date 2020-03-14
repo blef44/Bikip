@@ -20,6 +20,7 @@ namespace QuarantineJam
         internal Rectangle Hurtbox;
         internal Vector2 HurtboxSize;
         internal Sprite PreviousSprite, CurrentSprite;
+        public static Sprite bee;
         internal int SpriteFrames = 0;
         internal static Random r = new Random();
         internal float WallBounceFactor, GroundBounceFactor = 0f, GroundFactor, Gravity, XTreshold = 0.1f;
@@ -27,7 +28,7 @@ namespace QuarantineJam
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
-          
+         bee = new Sprite(4, 69, 59, 100, Content.Load<Texture2D>("bee"));
         }
         public PhysicalObject(Vector2 HurtboxSize, Vector2 FeetPosition, bool isParticle = false)
         {

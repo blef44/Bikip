@@ -133,7 +133,7 @@ namespace QuarantineJam
                     }
                 case (PlayerState.jump):
                     {
-                        if (Velocity.Y < -2) CurrentSprite = rise;
+                        if (Velocity.Y < -4) CurrentSprite = rise;
                         else if (Velocity.Y > 4) CurrentSprite = fall;
                         else CurrentSprite = roll;
                         break;
