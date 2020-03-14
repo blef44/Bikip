@@ -197,7 +197,7 @@ namespace QuarantineJam
                 {
                     if (CheckCollision(b.Hurtbox, b.Velocity))
                     {
-                        Console.WriteLine("collision between bee and player");
+                        //Console.WriteLine("collision between bee and player");
                         BeeToRemove = b;
                     }
                 }
