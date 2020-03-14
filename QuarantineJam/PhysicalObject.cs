@@ -15,9 +15,6 @@ namespace QuarantineJam
     {
         internal static int IDcount = 0;
         internal int ID, lifetime, push_force = 15;
-        internal static Sprite JuiceBoxSprite, JuiceBoxBrokenSprite, verre_debris, TubeSprite, BigTubeSprite, FleurSprite, FleurBumpSprite, PollenSprite, FlagSprite, FissureSprite, HighScoreMachineSprite;
-        internal static SoundEffect BrokenGlass1, BrokenGlass2, BrokenGlass3, FlowerBump, RespawnSound;
-        internal static Texture2D dontgohere;
         internal Vector2 Velocity;
         internal Vector2 FeetPosition;
         internal Rectangle Hurtbox;

@@ -12,6 +12,10 @@ namespace QuarantineJam
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        World world;
+        Player player;
+        Matrix Camera;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,7 +31,9 @@ namespace QuarantineJam
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            player = new Player();
+            world = new World(player);
+            Camera = Matrix.CreateScale(1) * Matrix.CreateTranslation(0, 0, 0);
             base.Initialize();
         }
 
@@ -39,7 +45,8 @@ namespace QuarantineJam
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            World.LoadContent(Content);
+            Player.LoadContent(Content);
             // TODO: use this.Content to load your game content here
         }
 
@@ -59,10 +66,9 @@ namespace QuarantineJam
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
-            // TODO: Add your update logic here
+            player.Update(gameTime, world);
+            world.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -73,10 +79,14 @@ namespace QuarantineJam
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin(SpriteSortMode.Immediate, transformMatrix: Camera);
+            GraphicsDevice.Clear(Color.LightGray);
+            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 
-            // TODO: Add your drawing code here
+            world.Draw(spriteBatch);
+            player.Draw(spriteBatch);
 
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

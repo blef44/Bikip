@@ -18,10 +18,6 @@ namespace QuarantineJam
         private Player saved_player;
         public List<PhysicalObject> Stuff;
 
-        public void Update(GameTime gameTime, Player player)
-        {
-          
-        }
            
 
         public World(Player player)
@@ -31,12 +27,19 @@ namespace QuarantineJam
             saved_player = player;
             
             LoadedWorldHitbox = new List<Rectangle>() { };
+            Stuff = new List<PhysicalObject>();
             
         }
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             
+        }
+
+
+        public void Update(GameTime gameTime)
+        {
+
         }
 
         public void Draw(SpriteBatch spriteBatch)

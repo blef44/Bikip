@@ -13,9 +13,8 @@ namespace QuarantineJam
 {
     public class Player : PhysicalObject
     {
-        //static Sprite ;
+        static Sprite idle;
         //static SoundEffect ;
-
         public enum PlayerState { idle, walk, jump } //etc
         public PlayerState CurrentState, PreviousState;
         public int state_frames;
@@ -26,16 +25,16 @@ namespace QuarantineJam
 
         new public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
-            
+            idle = new Sprite(Content.Load<Texture2D>("template"));
         }
         public Player():base(new Vector2(50, 50), new Vector2(0,0))
         {
-            FeetPosition = new Vector2(200, -1);
+            FeetPosition = new Vector2(200, 200);
             CurrentState = PlayerState.idle;
             WallBounceFactor = 0f;
             GroundBounceFactor = 0f;
             GroundFactor = 0.95f;
-            Gravity = 1.1f;
+            Gravity = 0f;
 
             Velocity = new Vector2(0, 0);
             PlayerDirection = 1;
@@ -45,7 +44,8 @@ namespace QuarantineJam
         {
             this.world = world;
 
-       
+            CurrentSprite = idle;
+
             if (PreviousState == CurrentState) state_frames += 1;
             else state_frames = 0;
             PreviousState = CurrentState;
@@ -81,6 +81,12 @@ namespace QuarantineJam
 
             base.Update(gameTime, world);
 
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            idle.DrawFromFeet(spriteBatch, FeetPosition);
         }
 
         private void Death()
