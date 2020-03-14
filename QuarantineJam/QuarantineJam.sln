@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuarantineJam", "QuarantineJam.csproj", "{BC15E793-0A5B-450D-AB4A-3688563FA8BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC15E793-0A5B-450D-AB4A-3688563FA8BB}.Debug|x86.ActiveCfg = Debug|x86
+		{BC15E793-0A5B-450D-AB4A-3688563FA8BB}.Debug|x86.Build.0 = Debug|x86
+		{BC15E793-0A5B-450D-AB4A-3688563FA8BB}.Release|x86.ActiveCfg = Release|x86
+		{BC15E793-0A5B-450D-AB4A-3688563FA8BB}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EFB89BA9-B5B0-42AB-A09A-B58046DC565C}
+	EndGlobalSection
+EndGlobal
