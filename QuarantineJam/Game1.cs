@@ -48,6 +48,7 @@ namespace QuarantineJam
             spriteBatch = new SpriteBatch(GraphicsDevice);
             World.LoadContent(Content);
             Player.LoadContent(Content);
+            Bee.LoadContent(Content);
             rectangle = Content.Load<Texture2D>("texture_chelou");
             // TODO: use this.Content to load your game content here
         }
