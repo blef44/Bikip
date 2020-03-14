@@ -8,8 +8,10 @@ namespace QuarantineJam
 {
     public static class Level
     {
+        static Random random;
         public static void InitLevel(int level, List<Rectangle> worldHitbox, List<PhysicalObject> stuff)
         {
+            random = new Random(37);
             Rectangle r(int x, int y, int w, int h) => new Rectangle(x, y, w, h);
             worldHitbox.Clear();
             stuff.Clear();
@@ -41,6 +43,16 @@ namespace QuarantineJam
                     }
                     worldHitbox.AddRange(newList);
                     stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
+                    foreach (PhysicalObject o in stuff)
+                    {
+                        o.FeetPosition += new Vector2(random.Next(-2, 2), random.Next(-2, 2));
+                        Console.WriteLine(o.FeetPosition);
+                    }
+
                     break;
             }
         }

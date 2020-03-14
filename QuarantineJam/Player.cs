@@ -41,7 +41,7 @@ namespace QuarantineJam
             CurrentState = PlayerState.idle;
             WallBounceFactor = 0f;
             GroundBounceFactor = 0f;
-            GroundFactor = 0.8f;
+            GroundFriction = 0.8f;
             Gravity = 0.5f;
 
             Velocity = new Vector2(0, 0);

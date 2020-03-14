@@ -23,7 +23,7 @@ namespace QuarantineJam
         public static Sprite bee;
         internal int SpriteFrames = 0;
         internal static Random r = new Random();
-        internal float WallBounceFactor, GroundBounceFactor = 0f, GroundFactor, Gravity, XTreshold = 0.1f;
+        internal float WallBounceFactor, GroundBounceFactor = 0f, GroundFriction, AirFriction = 1f, Gravity, XTreshold = 0.1f;
         internal bool is_particle = false, wallcollision = false, groundcollision = false, push_player = false, is_solid = false, player_hit = false;
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
@@ -60,7 +60,8 @@ namespace QuarantineJam
 
             PreviousSprite = CurrentSprite;
 
-            if (IsOnGround(world)) Velocity.X *= GroundFactor;
+            if (IsOnGround(world)) Velocity.X *= GroundFriction;
+            else Velocity *= AirFriction;
 
             ApplyForce(new Vector2(0, Gravity));
 
