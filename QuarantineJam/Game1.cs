@@ -15,7 +15,7 @@ namespace QuarantineJam
 
         World world;
         Vector2 CameraPosition;
-        float Zoom = 1f;
+        float Zoom = 0.8f;
         Player player;
         Matrix Camera;
 
@@ -80,8 +80,8 @@ namespace QuarantineJam
             if (ks.IsKeyDown(Keys.Q)) CameraPosition.X += 8;
             if (ks.IsKeyDown(Keys.Z)) CameraPosition.Y += 8;
             if (ks.IsKeyDown(Keys.S)) CameraPosition.Y -= 8;
-            if (ks.IsKeyDown(Keys.OemPlus)) Zoom += 0.1f;
-            if (ks.IsKeyDown(Keys.OemMinus)) CameraPosition.Y -= 0.1f;
+            if (ks.IsKeyDown(Keys.NumPad9)) Zoom *= 1.05f;
+            if (ks.IsKeyDown(Keys.NumPad8)) Zoom *= 0.95f;
 #endif
             Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(CameraPosition.X, CameraPosition.Y, 0);
             
