@@ -51,7 +51,7 @@ namespace QuarantineJam
                     foreach (PhysicalObject o in stuff)
                     {
                         o.FeetPosition += new Vector2(random.Next(-2, 2), random.Next(-2, 2));
-                        Console.WriteLine(o.FeetPosition);
+                        //Console.WriteLine(o.FeetPosition);
                     }
 
                     break;

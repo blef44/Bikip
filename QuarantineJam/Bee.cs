@@ -18,6 +18,7 @@ namespace QuarantineJam
             brownianPosition = new Vector2(0, 0);
             CurrentSprite = new Sprite(bee);
             AirFriction = 0.95f;
+            XTreshold = 0;
         }
 
         public Bee(Vector2 FeetPosition, Vector2 Speed) : base(beeHurtboxSize, FeetPosition)
@@ -26,20 +27,21 @@ namespace QuarantineJam
             CurrentSprite = new Sprite(bee);
             AirFriction = 0.95f;
             Velocity = Speed;
+            XTreshold = 0;
         }
 
         public override void Update(GameTime gameTime, World world, Player player)
         {
             foreach (PhysicalObject p in world.Stuff)
             {
-                if (p != this && p is Bee b && (FeetPosition - b.FeetPosition).Length() <= 50)
+                Vector2 distance = FeetPosition - p.FeetPosition;
+                if (p != this && p is Bee && distance.Length() <= 50)
                 {
                     //Console.WriteLine("collision between two bees");
-                    Vector2 distance = FeetPosition - b.FeetPosition;
-                    if (distance == Vector2.Zero) distance = new Vector2(1, 0);
+                    if (distance.Length() <= 0.0001f) distance = new Vector2(random.Next(0, 2) * 2 - 1, random.Next(0, 2) * 2 - 1);
                     Vector2 bounce = BeeBounceFactor * distance / (distance.Length() * distance.Length());
                     ApplyForce(bounce);
-                    b.ApplyForce(-bounce);
+                    p.ApplyForce(-bounce);
                 }
             }
 

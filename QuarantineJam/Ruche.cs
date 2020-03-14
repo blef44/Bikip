@@ -55,8 +55,8 @@ namespace QuarantineJam
                 if (bee_count > 0)
                 {
                     bee_count -= 1;
-                    Bee b = new Bee(FeetPosition + new Vector2(-100, 0), 
-                        new Vector2( r.Next(15, 23), r.Next(-2, 3))); // use (r.Next(0,2) * 2 - 1) to random -1 or 1
+                    Bee b = new Bee(FeetPosition + new Vector2(-100, 0) + new Vector2(r.Next(-2, 2), r.Next(-2, 2)), 
+                        new Vector2( -r.Next(12, 18), r.Next(-2, 3))); // use (r.Next(0,2) * 2 - 1) to random -1 or 1
                    // b.Velocity = new Vector2(-10, 0);
                     world.NewStuff.Add(b);
                 }
