@@ -229,9 +229,13 @@ namespace QuarantineJam
             if (groundcollision)
             {
                 Velocity.Y = 0;
-                Rectangle HigherTopRectangle = LandingGroundCandidate[0];
-                foreach (Rectangle r in LandingGroundCandidate) if(r.Top < HigherTopRectangle.Top) HigherTopRectangle = r;
-                if (!world.CheckCollision(Hurtbox, new Vector2(0, HigherTopRectangle.Top - FeetPosition.Y))) FeetPosition.Y += HigherTopRectangle.Y - FeetPosition.Y;
+                if(IntVelocity.Y > 0) // if falling
+                {
+                    Rectangle HigherTopRectangle = LandingGroundCandidate[0];
+                    foreach (Rectangle r in LandingGroundCandidate) if (r.Top < HigherTopRectangle.Top) HigherTopRectangle = r;
+                    if (!world.CheckCollision(Hurtbox, new Vector2(0, HigherTopRectangle.Top - FeetPosition.Y))) FeetPosition.Y += HigherTopRectangle.Y - FeetPosition.Y;
+
+                }
             }
             FeetPosition.Y += Velocity.Y; // Apply Y movement
             Hurtbox.Y = (int)Math.Floor(FeetPosition.Y - HurtboxSize.Y);
