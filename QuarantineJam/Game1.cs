@@ -33,7 +33,7 @@ namespace QuarantineJam
             // TODO: Add your initialization logic here
             player = new Player();
             world = new World(player);
-            Camera = Matrix.CreateScale(1) * Matrix.CreateTranslation(0, 0, 0);
+            Camera = Matrix.CreateScale(2.0f/3) * Matrix.CreateTranslation(0, 0, 0);
             base.Initialize();
         }
 

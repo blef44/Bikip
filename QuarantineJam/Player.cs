@@ -13,6 +13,7 @@ namespace QuarantineJam
 {
     public class Player : PhysicalObject
     {
+        private const float MaxSpeed = 10;
         static Sprite idle;
         //static SoundEffect ;
         public enum PlayerState { idle, walk, jump } //etc
@@ -20,6 +21,8 @@ namespace QuarantineJam
         public int state_frames;
         World world;
         Random random = new Random();
+
+        KeyboardState prevKbState;
 
         public int PlayerDirection;
 
@@ -33,16 +36,18 @@ namespace QuarantineJam
             CurrentState = PlayerState.idle;
             WallBounceFactor = 0f;
             GroundBounceFactor = 0f;
-            GroundFactor = 0.95f;
+            GroundFactor = 0.8f;
             Gravity = 0.5f;
 
             Velocity = new Vector2(0, 0);
             PlayerDirection = 1;
+            prevKbState = new KeyboardState();
         }
 
         public override void Update(GameTime gameTime, World world)
         {
             this.world = world;
+            KeyboardState KbState = Keyboard.GetState();
 
             CurrentSprite = idle;
 
@@ -52,7 +57,17 @@ namespace QuarantineJam
 
             switch (CurrentState)
             {
-                
+                case PlayerState.idle:
+                    if (KbState.IsKeyDown(Input.Left) && KbState.IsKeyUp(Input.Right))
+                    {
+                        if (Velocity.X > -MaxSpeed)
+                            ApplyForce(new Vector2(-2f, 0));
+                    } else if (KbState.IsKeyDown(Input.Right))
+                    {
+                        if (Velocity.X < MaxSpeed)
+                            ApplyForce(new Vector2(2f, 0));
+                    }
+                    break;
             }
             //
             // SPRITE DETERMINATION
@@ -79,6 +94,7 @@ namespace QuarantineJam
 
             foreach (PhysicalObject o in world.Stuff) ;// do something;
 
+            prevKbState = KbState;
             base.Update(gameTime, world);
 
         }
