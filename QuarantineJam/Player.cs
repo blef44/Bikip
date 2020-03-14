@@ -107,6 +107,7 @@ namespace QuarantineJam
                     break;
 
                 case PlayerState.jump:
+                    if (Velocity.Y < 0 && Velocity.X != 0) PlayerDirection = Math.Sign(Velocity.X); // raising
                     if (KbState.IsKeyDown(Input.Jump) && !prevKbState.IsKeyDown(Input.Jump))
                     {
                         Velocity.Y = 0;
