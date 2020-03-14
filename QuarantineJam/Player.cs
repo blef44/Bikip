@@ -14,7 +14,7 @@ namespace QuarantineJam
     public class Player : PhysicalObject
     {
         private const float MaxSpeed = 15;
-        static Sprite idle, run, brake;
+        static Sprite idle, run, brake, fall, rise, roll;
         //static SoundEffect ;
         public enum PlayerState { idle, walk, jump } //etc
         public PlayerState CurrentState, PreviousState;
@@ -31,6 +31,9 @@ namespace QuarantineJam
             idle = new Sprite(2, 193, 168, 350, Content.Load<Texture2D>("player_idle"));
             run = new Sprite(5, 193, 168, 70, Content.Load<Texture2D>("player_run"));
             brake = new Sprite(Content.Load<Texture2D>("brake"));
+            rise = new Sprite(Content.Load<Texture2D>("rise"));
+            fall = new Sprite(Content.Load<Texture2D>("fall"));
+            roll = new Sprite(3, 193 + 40, 168, 80, Content.Load<Texture2D>("roll"));
         }
         public Player():base(new Vector2(50, 50), new Vector2(0,0))
         {
@@ -72,14 +75,14 @@ namespace QuarantineJam
                     if (IsOnGround(world) && Input.direction != 0) CurrentState = PlayerState.walk;
                     else if (KbState.IsKeyDown(Input.Jump))
                     {
-                        ApplyForce(new Vector2(0, -10f));
+                        ApplyForce(new Vector2(0, -15f));
                         CurrentState = PlayerState.jump;
                     }
                     break;
                 case PlayerState.walk:
                     if (KbState.IsKeyDown(Input.Jump))
                     {
-                        ApplyForce(new Vector2(0, -10f));
+                        ApplyForce(new Vector2(0, -15f));
                         CurrentState = PlayerState.jump;
                     }
                     else if (Input.direction != 0) // player is inputing a direction (either left or right)
@@ -126,6 +129,13 @@ namespace QuarantineJam
                 case (PlayerState.walk):
                     {
                         CurrentSprite = run;
+                        break;
+                    }
+                case (PlayerState.jump):
+                    {
+                        if (Velocity.Y < -2) CurrentSprite = rise;
+                        else if (Velocity.Y > 4) CurrentSprite = fall;
+                        else CurrentSprite = roll;
                         break;
                     }
             }
