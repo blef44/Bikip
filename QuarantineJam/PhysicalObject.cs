@@ -61,7 +61,7 @@ namespace QuarantineJam
             PreviousSprite = CurrentSprite;
 
             if (IsOnGround(world)) Velocity.X *= GroundFriction;
-            else Velocity *= AirFriction;
+            else Velocity.X *= AirFriction;
 
             ApplyForce(new Vector2(0, Gravity));
 

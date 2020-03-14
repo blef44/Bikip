@@ -32,6 +32,7 @@ namespace QuarantineJam
                 }
             }
             CurrentSprite.UpdateFrame(gameTime);
+            Velocity.Y *= AirFriction;
             base.Update(gameTime, world);
         }
 
