@@ -154,7 +154,21 @@ namespace QuarantineJam
             CurrentSprite.direction = PlayerDirection;
             CurrentSprite.UpdateFrame(gameTime);
 
-            foreach (PhysicalObject o in world.Stuff) ;// do something;
+            PhysicalObject BeeToRemove = null;
+            foreach (PhysicalObject o in world.Stuff)
+            {
+                if (o is Bee b)
+                {
+                    if (CheckCollision(b.Hurtbox, b.Velocity))
+                    {
+                        Console.WriteLine("collision between bee and player");
+                        BeeToRemove = b;
+                    }
+                }
+                // do something;
+            }
+            if (BeeToRemove != null)
+                world.Stuff.Remove(BeeToRemove);
 
             prevKbState = KbState;
             base.Update(gameTime, world);
