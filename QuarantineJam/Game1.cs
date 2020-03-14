@@ -81,7 +81,7 @@ namespace QuarantineJam
         {
             spriteBatch.Begin(SpriteSortMode.Immediate, transformMatrix: Camera);
             GraphicsDevice.Clear(Color.LightGray);
-            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
 
             world.Draw(spriteBatch);
             player.Draw(spriteBatch);
