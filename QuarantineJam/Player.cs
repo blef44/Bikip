@@ -33,7 +33,7 @@ namespace QuarantineJam
             brake = new Sprite(Content.Load<Texture2D>("brake"));
             rise = new Sprite(Content.Load<Texture2D>("rise"));
             fall = new Sprite(Content.Load<Texture2D>("fall"));
-            roll = new Sprite(3, 193 + 40, 168, 80, Content.Load<Texture2D>("roll"));
+            roll = new Sprite(6, 232, 168, 60, Content.Load<Texture2D>("roll"));
         }
         public Player():base(new Vector2(40, 100), new Vector2(0,0))
         {
