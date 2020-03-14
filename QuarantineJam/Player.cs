@@ -72,14 +72,14 @@ namespace QuarantineJam
                     if (IsOnGround(world) && Input.direction != 0) CurrentState = PlayerState.walk;
                     else if (KbState.IsKeyDown(Input.Jump))
                     {
-                        ApplyForce(new Vector2(0, -10f));
+                        ApplyForce(new Vector2(0, -15f));
                         CurrentState = PlayerState.jump;
                     }
                     break;
                 case PlayerState.walk:
                     if (KbState.IsKeyDown(Input.Jump))
                     {
-                        ApplyForce(new Vector2(0, -10f));
+                        ApplyForce(new Vector2(0, -15f));
                         CurrentState = PlayerState.jump;
                     }
                     else if (Input.direction != 0) // player is inputing a direction (either left or right)
