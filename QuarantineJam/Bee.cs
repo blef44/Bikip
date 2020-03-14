@@ -10,14 +10,12 @@ namespace QuarantineJam
     public class Bee : PhysicalObject
     {
         private Vector2 brownianPosition, brownianVelocity; // position et vitesse relative, pour faire un mouvement brownien
-        Random random;
+        static Random random = new Random();
         private float BeeBounceFactor { get; } = 0.5f;
         private static Vector2 beeHurtboxSize { get; } = new Vector2(42, 33);
-        static Sprite idle;
-        public Bee(Vector2 FeetPosition, int Seed) : base(beeHurtboxSize, FeetPosition)
+        public Bee(Vector2 FeetPosition) : base(beeHurtboxSize, FeetPosition)
         {
             brownianPosition = new Vector2(0, 0);
-            random = new Random(Seed);
             CurrentSprite = new Sprite(bee);
             AirFriction = 0.95f;
         }
@@ -36,6 +34,8 @@ namespace QuarantineJam
                 }
             }
 
+            
+
             Velocity.Y *= AirFriction;
             CurrentSprite.UpdateFrame(gameTime);
             // mouvement brownien
@@ -48,6 +48,16 @@ namespace QuarantineJam
         public override void Draw(SpriteBatch spriteBatch)
         {
             CurrentSprite.DrawFromFeet(spriteBatch, FeetPosition + brownianPosition);
+        }
+
+        public void AttractFromPlayer(Player player)
+        {
+            Vector2 distance = (player.FeetPosition - new Vector2(0, player.HurtboxSize.Y / 2)) - (FeetPosition - new Vector2(0, HurtboxSize.Y / 2));
+            if ((distance).Length() <= 200)
+            {
+
+                ApplyForce(distance/distance.Length()/distance.Length() * 40);
+            }
         }
     }
 }

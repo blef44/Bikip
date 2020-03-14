@@ -42,11 +42,11 @@ namespace QuarantineJam
                         newList.Add(re);
                     }
                     worldHitbox.AddRange(newList);
-                    stuff.Add(new Bee(new Vector2(1300, 400), 1));
-                    stuff.Add(new Bee(new Vector2(1300, 400), 2));
-                    stuff.Add(new Bee(new Vector2(1300, 400), 3));
-                    stuff.Add(new Bee(new Vector2(1300, 400), 4));
-                    stuff.Add(new Bee(new Vector2(1300, 400), 5));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
+                    stuff.Add(new Bee(new Vector2(1300, 400)));
                     foreach (PhysicalObject o in stuff)
                     {
                         o.FeetPosition += new Vector2(random.Next(-2, 2), random.Next(-2, 2));

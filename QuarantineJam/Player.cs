@@ -195,6 +195,7 @@ namespace QuarantineJam
             {
                 if (o is Bee b)
                 {
+                    b.AttractFromPlayer(this);
                     if (CheckCollision(b.Hurtbox, b.Velocity))
                     {
                         //Console.WriteLine("collision between bee and player");
