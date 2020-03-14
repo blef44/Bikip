@@ -16,7 +16,7 @@ namespace QuarantineJam
         private const float MaxSpeed = 15;
         static Sprite idle, run, brake, fall, rise, roll;
         //static SoundEffect ;
-        public enum PlayerState { idle, walk, jump } //etc
+        public enum PlayerState { idle, walk, jump, doublejump } //etc
         public PlayerState CurrentState, PreviousState;
         public int state_frames;
         World world;
@@ -72,7 +72,8 @@ namespace QuarantineJam
                             ApplyForce(new Vector2(2f, 0));
                         CurrentState = PlayerState.walk;
                     }*/
-                    if (IsOnGround(world) && Input.direction != 0) CurrentState = PlayerState.walk;
+                    if (!IsOnGround(world)) CurrentState = PlayerState.jump;
+                    else if (Input.direction != 0) CurrentState = PlayerState.walk;
                     else if (KbState.IsKeyDown(Input.Jump))
                     {
                         ApplyForce(new Vector2(0, -15f));
@@ -82,15 +83,17 @@ namespace QuarantineJam
                 case PlayerState.walk:
                     if (KbState.IsKeyDown(Input.Jump))
                     {
+                        // Velocity = 0;
                         ApplyForce(new Vector2(0, -15f));
                         CurrentState = PlayerState.jump;
                     }
+                    else if (!IsOnGround(world)) CurrentState = PlayerState.jump;
                     else if (Input.direction != 0) // player is inputing a direction (either left or right)
                     {
                         PlayerDirection = Input.direction;
                         if (Math.Sign(Velocity.X) * Math.Sign(Input.direction) >= 0) // if inputed direction is the same as current movement direction
                         {
-                            if(Velocity.X * Velocity.X < MaxSpeed * MaxSpeed) // if norm of velocity below max speed
+                            if (Velocity.X * Velocity.X < MaxSpeed * MaxSpeed) // if norm of velocity below max speed
                                 ApplyForce(new Vector2(Input.direction * 2f, 0));
                         }
                         else // if player is inputing the direction against the current movement (brake)
@@ -100,7 +103,18 @@ namespace QuarantineJam
                     break;
 
                 case PlayerState.jump:
-                    if (Input.direction != 0) // player is inputing a direction (either left or right)
+                    if (KbState.IsKeyDown(Input.Jump) && !prevKbState.IsKeyDown(Input.Jump))
+                    {
+                        Velocity = new Vector2(0, 0);
+                        if (Input.direction == 0) ApplyForce(new Vector2(0, -15));
+                        else
+                        {
+                            PlayerDirection = Input.direction;
+                            ApplyForce(new Vector2(Input.direction * 10, -10));
+                        }
+                        CurrentState = PlayerState.doublejump;
+                    }
+                    else if (Input.direction != 0) // player is inputing a direction (either left or right)
                     {
                         if (Math.Sign(Velocity.X) * Math.Sign(Input.direction) >= 0) // if inputed direction is the same as current movement direction
                         {
@@ -113,6 +127,22 @@ namespace QuarantineJam
                     if (IsOnGround(world))
                         CurrentState = PlayerState.idle;
                     break;
+                case (PlayerState.doublejump):
+                {
+                        if (Input.direction != 0) // player is inputing a direction (either left or right)
+                        {
+                            if (Math.Sign(Velocity.X) * Math.Sign(Input.direction) >= 0) // if inputed direction is the same as current movement direction
+                            {
+                                if (Velocity.X * Velocity.X < 5) // if norm of velocity below max air speed
+                                    ApplyForce(new Vector2(Input.direction * 2f, 0));
+                            }
+                            else // if player is inputing the direction against the current movement (brake)
+                                ApplyForce(new Vector2(Input.direction * 2f, 0));
+                        }
+                        if (IsOnGround(world))
+                            CurrentState = PlayerState.idle;
+                        break;
+                }
             }
             //
             // SPRITE DETERMINATION
@@ -134,8 +164,14 @@ namespace QuarantineJam
                 case (PlayerState.jump):
                     {
                         if (Velocity.Y < -4) CurrentSprite = rise;
-                        else if (Velocity.Y > 4) CurrentSprite = fall;
-                        else CurrentSprite = roll;
+                        //else if (Velocity.Y > 4) CurrentSprite = fall;
+                        else CurrentSprite = fall;
+                        break;
+                    }
+                case (PlayerState.doublejump):
+                    {
+                        if (Velocity.Y < 3) CurrentSprite = roll;
+                        else CurrentSprite = fall;
                         break;
                     }
             }

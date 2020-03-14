@@ -14,6 +14,8 @@ namespace QuarantineJam
         public static Texture2D rectangle; // used for debug
 
         World world;
+        Vector2 CameraPosition;
+        float Zoom = 0.8f;
         Player player;
         Matrix Camera;
 
@@ -36,7 +38,7 @@ namespace QuarantineJam
             // TODO: Add your initialization logic here
             player = new Player();
             
-            Camera = Matrix.CreateScale(2.0f/3) * Matrix.CreateTranslation(0, 0, 0);
+            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(200, 400, 0);
             base.Initialize();
         }
 
@@ -72,7 +74,17 @@ namespace QuarantineJam
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-
+#if DEBUG
+            KeyboardState ks = Keyboard.GetState();
+            if (ks.IsKeyDown(Keys.D)) CameraPosition.X -= 8;
+            if (ks.IsKeyDown(Keys.Q)) CameraPosition.X += 8;
+            if (ks.IsKeyDown(Keys.Z)) CameraPosition.Y += 8;
+            if (ks.IsKeyDown(Keys.S)) CameraPosition.Y -= 8;
+            if (ks.IsKeyDown(Keys.NumPad9)) Zoom *= 1.05f;
+            if (ks.IsKeyDown(Keys.NumPad8)) Zoom *= 0.95f;
+#endif
+            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(CameraPosition.X, CameraPosition.Y, 0);
+            
             player.Update(gameTime, world);
             world.Update(gameTime);
             Input.Update(Keyboard.GetState());
