@@ -89,10 +89,17 @@ namespace QuarantineJam
                     break;
                 case 2:
                     worldHitbox.AddRange(new List<Rectangle> {
-                        r(0, 720-100, 1600, 100),
-                        r(0, 720-2000, 50, 2000)
+                        r(-5, 720-100, 1610, 100),
+                        r(-5, 720-2000, 55, 2000),
+                        r(1600-50, 720-2000, 55, 2000),
+                        //r(0, 720-2050, 1600, 50),
+
+                        r(0, -200, 300, 50),
+                        r(0, 400, 6000, 50),
+                        r(600, 100, 100, 50)
                     });
-                    Bounds = new Rectangle(0, 720 - 2000, 1600, 2000);
+                    stuff.Add(new Ruche(new Vector2(650, 50), 5));
+                    Bounds = new Rectangle(0, 720 - 1600, 1600, 1600);
                     break;
             }
             if (Bounds == Rectangle.Empty) Bounds = new Rectangle(worldHitbox.Min(rec => rec.Left),
