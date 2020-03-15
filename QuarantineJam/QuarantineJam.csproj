@@ -52,6 +52,7 @@
     <Compile Include="Ruche.cs" />
     <Compile Include="SoundEffectPlayer.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="Ventilateur.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>

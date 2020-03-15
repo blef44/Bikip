@@ -40,7 +40,6 @@ namespace QuarantineJam
         }
         public Player():base(new Vector2(40, 100), new Vector2(0,0))
         {
-            FeetPosition = new Vector2(200, 200);
             CurrentState = PlayerState.idle;
             WallBounceFactor = 0f;
             GroundBounceFactor = 0f;
