@@ -129,14 +129,14 @@ namespace QuarantineJam
 
             world.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            DrawRectangle(spriteBatch, ViewRectangle, Color.Red * 0.5f);
-            DrawRectangle(spriteBatch, world.Bounds, Color.Green * 0.5f);
-            DrawRectangle(spriteBatch, new Rectangle((int)CameraPosition.X, (int)CameraPosition.Y, 15, 15), Color.Black);
+            //DrawRectangle(spriteBatch, ViewRectangle, Color.Red * 0.5f);
+            //DrawRectangle(spriteBatch, world.Bounds, Color.Green * 0.5f);
+            //DrawRectangle(spriteBatch, new Rectangle((int)CameraPosition.X, (int)CameraPosition.Y, 15, 15), Color.Black);
 
             spriteBatch.End();
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(rouliFont, world.countBees().ToString(), new Vector2(50, 50), Color.Black);
+            spriteBatch.DrawString(rouliFont, "Bees left: " +  world.countBees().ToString(), new Vector2(10, 10), Color.Black);
 
             spriteBatch.End();
             base.Draw(gameTime);

@@ -147,7 +147,7 @@ namespace QuarantineJam
                     {
                         if (CurrentSprite.isOver && state_frames > 200)
                         {
-                            world.NextLevel();//do something like next level;
+                            world.NextLevel(this);//do something like next level;
                             CurrentState = PlayerState.idle;
                         }
                         break;

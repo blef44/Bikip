@@ -20,6 +20,7 @@ namespace QuarantineJam
         public List<PhysicalObject> Stuff, NewStuff, RemovedStuff;
         public static Texture2D texture, ground, bg;
         public int levelIndex = 0;
+        public Vector2 Spawn;
            
 
         public World(Player player)
@@ -33,7 +34,7 @@ namespace QuarantineJam
             NewStuff = new List<PhysicalObject>();
             RemovedStuff = new List<PhysicalObject>();
             Bounds = new Rectangle();
-            Level.InitLevel(0, LoadedWorldHitbox, Stuff, ref Bounds);
+            Level.InitLevel(0, LoadedWorldHitbox, Stuff, ref Bounds, Spawn);
         }
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
@@ -87,10 +88,11 @@ namespace QuarantineJam
             return collision;
         }
 
-        public void NextLevel()
+        public void NextLevel(Player player)
         {
             levelIndex++;
-            Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds);
+            Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds, Spawn);
+            player.FeetPosition = Spawn;
         }
 
         public List<Rectangle> CheckCollisionReturnRectangleList(Rectangle rectangle, Vector2 movement)
