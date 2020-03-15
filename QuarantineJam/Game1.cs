@@ -15,7 +15,7 @@ namespace QuarantineJam
 
         World world;
 
-        Vector2 CameraDestination = new Vector2(0, 500), CameraPosition = new Vector2(0, 500);
+        Vector2 CameraDestination = new Vector2(0, 700), CameraPosition = new Vector2(0, 700);
         Rectangle ViewRectangle;
         float Zoom = 0.8f;
         Player player;
@@ -40,7 +40,7 @@ namespace QuarantineJam
             // TODO: Add your initialization logic here
             player = new Player();
             
-            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(200, 0, 0);
+            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(CameraPosition.X, CameraPosition.Y, 0);
             base.Initialize();
         }
 
