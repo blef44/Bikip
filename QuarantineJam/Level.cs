@@ -73,10 +73,17 @@ namespace QuarantineJam
                     break;
                 case 2:
                     worldHitbox.AddRange(new List<Rectangle> {
-                        r(0, 720-100, 1600, 100),
-                        r(0, 720-2000, 50, 2000)
+                            new Rectangle(-250, 0, 1030, 460) ,
+                            new Rectangle(600, -230, 790, 1440) ,
+                            new Rectangle(-340, -390, 360, 70) ,
+                            new Rectangle(-560, -1280, 1840, 440) ,
+                            new Rectangle(930, -930, 450, 870) ,
+                            new Rectangle(-580, -1110, 350, 1820) ,
                     });
-                    Bounds = new Rectangle(0, 720 - 2000, 1600, 2000);
+                    stuff.Add(new Ruche(new Vector2(470, -10), 20));
+                    stuff.Add(new Ruche(new Vector2(700, -250), 20));
+                    stuff.Add(new Ruche(new Vector2(-100, -400), 20, -1));
+                    Bounds = new Rectangle(-500, -800, 1342, 964);
                     break;
                 case 999:
                     worldHitbox.Add(r(0,500,1000,300));

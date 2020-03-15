@@ -14,11 +14,12 @@ namespace QuarantineJam
     class Ruche : PhysicalObject
     {
         public int bee_count { get; private set; }
-        private int frame_cooldown;
+        private int frame_cooldown, direction;
 
-        public Ruche(Vector2 Spawn, int bee_count = 10):base(new Vector2(95, 60), Spawn)
+        public Ruche(Vector2 Spawn, int bee_count = 10, int direction = 1):base(new Vector2(95, 60), Spawn)
         {
             this.bee_count = bee_count;
+            this.direction = direction;
             frame_cooldown = 0;
             Gravity = 1f;
         }
@@ -57,8 +58,8 @@ namespace QuarantineJam
                 if (bee_count > 0)
                 {
                     bee_count -= 1;
-                    Bee b = new Bee(FeetPosition + new Vector2(-50, 0), 
-                        new Vector2( -r.Next(14, 25), r.Next(-2, 3))); // use (r.Next(0,2) * 2 - 1) to random -1 or 1
+                    Bee b = new Bee(FeetPosition + new Vector2(- direction * 50, 0), 
+                        new Vector2( - direction * r.Next(14, 25), r.Next(-2, 3))); // use (r.Next(0,2) * 2 - 1) to random -1 or 1
                    // b.Velocity = new Vector2(-10, 0);
                     world.NewStuff.Add(b);
                 }
