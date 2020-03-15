@@ -126,7 +126,7 @@ namespace QuarantineJam
 
                     break;
 
-                case 3:
+                case 3: // niveau efflam
                     worldHitbox.AddRange(new List<Rectangle> {
                         r(-150, 100, 1630, 100),
                         r(-150, -1650, 55, 1750),
@@ -162,7 +162,7 @@ namespace QuarantineJam
                     stuff.AddRange(BeesFilling(new Rectangle(-50,-1200,1,400)));
                     stuff.AddRange(BeesFilling(new Rectangle(300,-1100,500,1)));
                     stuff.AddRange(BeesFilling(new Rectangle(300,-1350,400,1)));
-                    Bounds = new Rectangle(-150, -1650, 1630, 1800);
+                    Bounds = new Rectangle(-150, -1650, 1, 1800);
                     break;
                 case 4: // level bees à guider
                     worldHitbox.AddRange(new List<Rectangle> {
@@ -182,6 +182,7 @@ namespace QuarantineJam
                     stuff.Add(new Ruche(new Vector2(840, -160), 3));
                     stuff.AddRange(BeesFilling(new Rectangle(-125, -838, 1297, 259), 100));
                     Bounds = new Rectangle(-263, -999, 1655, 877);
+                    Spawn = new Vector2(200, -200);
                     break;
                 case 5: // ventilos intros
                     worldHitbox.AddRange(new List<Rectangle> {
@@ -219,6 +220,8 @@ namespace QuarantineJam
                     stuff.AddRange(BeesFilling(new Rectangle(559, -749, 956, 95)));
                     stuff.AddRange(BeesFilling(new Rectangle(616, -510, 800, 102)));
                     stuff.AddRange(BeesFilling(new Rectangle(640, -128, 835, 103)));
+                    stuff.AddRange(BeesFilling(new Rectangle(500, -410, 200, 300)));
+                    stuff.AddRange(BeesFilling(new Rectangle(1300, -410, 180, 300)));
                     Bounds = new Rectangle(21, -850, 647, 530);
                     Spawn = new Vector2(200, -1);
                     break;

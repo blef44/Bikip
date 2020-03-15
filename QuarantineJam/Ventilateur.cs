@@ -18,6 +18,7 @@ namespace QuarantineJam
         {
             this.direction = direction;
             CurrentSprite = new Sprite(ventilo_sprite);
+            if (direction == 1) CurrentSprite.direction = -1;
             Gravity = 1f;
         }
 

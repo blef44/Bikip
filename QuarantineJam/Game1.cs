@@ -93,13 +93,15 @@ namespace QuarantineJam
                 CameraDestination = CameraPosition;
             }
             //else
-            {
-                if (player.Hurtbox.Center.Y < ViewRectangle.Center.Y - 100) MoveCamera(new Vector2(0, -5));
-                else if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100) MoveCamera(new Vector2(0, 10));
 
-                if (player.Hurtbox.Center.X > ViewRectangle.Center.X && player.PlayerDirection == 1) MoveCamera(new Vector2(10, 0));
-                else if (player.Hurtbox.Center.X < ViewRectangle.Center.X && player.PlayerDirection == -1) MoveCamera(new Vector2(-10, 0));
-            }
+            if (player.Hurtbox.Center.X > ViewRectangle.Center.X && player.PlayerDirection == 1) MoveCamera(new Vector2(10, 0));
+            else if (player.Hurtbox.Center.X < ViewRectangle.Center.X && player.PlayerDirection == -1) MoveCamera(new Vector2(-10, 0));
+
+
+            if (player.Hurtbox.Center.Y < ViewRectangle.Center.Y - 100) MoveCamera(new Vector2(0, -10));
+            else if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100) MoveCamera(new Vector2(0, 10));
+
+
 
             CameraPosition = CameraPosition * 0.5f + CameraDestination * 0.5f;
             Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(Zoom * (-CameraPosition.X), Zoom * (-CameraPosition.Y), 0);  ;
