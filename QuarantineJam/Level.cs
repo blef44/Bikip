@@ -19,6 +19,30 @@ namespace QuarantineJam
             switch(level)
             {
                 case 0:
+
+                    List<Rectangle> LevelList3 = new List<Rectangle>()
+                    {
+                            new Rectangle(-210, 0, 1290, 640) ,
+                            new Rectangle(400, -140, 110, 260) ,
+                            new Rectangle(-620, -880, 450, 1500) ,
+                            new Rectangle(160, -530, 470, 90) ,
+                            new Rectangle(-540, -1230, 1970, 420) ,
+                            new Rectangle(1250, -920, 480, 1490) ,
+                            new Rectangle(1020, -260, 260, 950) ,
+                    };
+                    worldHitbox.AddRange(LevelList3);
+                    stuff.AddRange(BeesFilling(new Rectangle(-40, -710, 100, 330)));
+                    stuff.AddRange(BeesFilling(new Rectangle(270, -670, 740, 10)));
+                    stuff.AddRange(BeesFilling(new Rectangle(270, -370, 400, 180)));
+                    stuff.AddRange(BeesFilling(new Rectangle(1000, -750, 40, 400)));
+                    foreach (PhysicalObject o in stuff)
+                    {
+                        o.FeetPosition += new Vector2(random.Next(-2, 2), random.Next(-2, 2));
+                    }
+                    Bounds = new Rectangle(-280, -860,(int) (1280 / 0.8f), (int)(720/0.8f));
+
+                    break;
+                case 999:
                     worldHitbox.Add(r(0,500,1000,300));
 
                     List<Rectangle> LevelList = new List<Rectangle>()
@@ -95,10 +119,10 @@ namespace QuarantineJam
                     Bounds = new Rectangle(0, 720 - 2000, 1600, 2000);
                     break;
             }
-            if (Bounds == Rectangle.Empty) Bounds = new Rectangle(worldHitbox.Min(rec => rec.Left),
-                                                                     worldHitbox.Min(rec => rec.Top),
-                                                                     worldHitbox.Max(rec => rec.Right),
-                                                                     worldHitbox.Max(rec => rec.Bottom));
+           // if (Bounds == Rectangle.Empty) Bounds = new Rectangle(worldHitbox.Min(rec => rec.Left),
+           //                                                          worldHitbox.Min(rec => rec.Top),
+           //                                                          worldHitbox.Max(rec => rec.Right) - worldHitbox.Min(rec => rec.Left),
+           //                                                          worldHitbox.Max(rec => rec.Bottom) - worldHitbox.Min(rec => rec.Top));
         }
 
         private static List<PhysicalObject> BeesFilling(Rectangle toFill)

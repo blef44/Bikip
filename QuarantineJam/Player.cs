@@ -145,7 +145,11 @@ namespace QuarantineJam
                 }
                 case (PlayerState.flip):
                     {
-                        if (CurrentSprite.isOver) ;//do something like next level;
+                        if (CurrentSprite.isOver && state_frames > 200)
+                        {
+                            world.NextLevel();//do something like next level;
+                            CurrentState = PlayerState.idle;
+                        }
                         break;
                     }
             }
