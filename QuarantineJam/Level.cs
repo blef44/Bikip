@@ -162,17 +162,17 @@ namespace QuarantineJam
                 case 5: // ventilos intros
                     worldHitbox.AddRange(new List<Rectangle> {
                                                        new Rectangle(-260, -960, 350, 1760) ,
-                            new Rectangle(1130, -310, 520, 530) ,
-                            new Rectangle(1380, -640, 280, 370) ,
+                            //new Rectangle(1130, -310, 520, 530) ,
+                            new Rectangle(1380, -580, 280, 370) ,
                             new Rectangle(1590, -960, 440, 1490) ,
                             new Rectangle(0, 0, 1670, 1200) ,
                             new Rectangle(-160, -1230, 1990, 390) ,
                             new Rectangle(1010, -150, 160, 260) ,
                     });
                     stuff.Add(new Ventilateur(new Vector2(1070, -150)));
-                    stuff.Add(new Ventilateur(new Vector2(1530, -640)));
-                    stuff.AddRange(BeesFilling(new Rectangle(1165, -587, 195, 258), 40));
-                    stuff.AddRange(BeesFilling(new Rectangle(190, -700, 790, 110)));
+                    stuff.Add(new Ventilateur(new Vector2(1530, -600)));
+                    stuff.AddRange(BeesFilling(new Rectangle(1200, -485, 153, 112)));
+                    stuff.AddRange(BeesFilling(new Rectangle(1262, -148, 309, 131)));
                     Bounds = new Rectangle(21, -850, 647, 530);
                     Spawn = new Vector2(330, -1);
                     break;

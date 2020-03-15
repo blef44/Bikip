@@ -18,17 +18,18 @@ namespace QuarantineJam
         {
             this.direction = direction;
             CurrentSprite = new Sprite(ventilo_sprite);
+            Gravity = 1f;
         }
 
         public override void Update(GameTime gameTime, World world, Player player)
         {
             WindBox = new Rectangle((int)FeetPosition.X + (direction - 1) * 400, (int)FeetPosition.Y - 200, 800, 200);
             CurrentSprite.UpdateFrame(gameTime);
-            foreach (PhysicalObject p in world.Stuff) if (p.Hurtbox.Intersects(WindBox)) p.ApplyForce(new Vector2(direction * 0.1f, 0));
+            foreach (PhysicalObject p in world.Stuff) if (WindBox.Contains(p.Hurtbox.Center)) p.ApplyForce(new Vector2(direction * 0.1f, 0));
 
             if (player.Hurtbox.Intersects(WindBox))
             {
-                player.ApplyForce(new Vector2(direction * 5.5f, 0));
+                player.ApplyForce(new Vector2(direction * 4.2f, 0));
             }
             
             base.Update(gameTime, world, player);
