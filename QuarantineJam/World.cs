@@ -19,7 +19,7 @@ namespace QuarantineJam
         private Player saved_player;
         public List<PhysicalObject> Stuff, NewStuff, RemovedStuff;
         public static Texture2D texture, ground, bg;
-
+        public int levelIndex = 0;
            
 
         public World(Player player)
@@ -33,7 +33,7 @@ namespace QuarantineJam
             NewStuff = new List<PhysicalObject>();
             RemovedStuff = new List<PhysicalObject>();
             Bounds = new Rectangle();
-            Level.InitLevel(2, LoadedWorldHitbox, Stuff, ref Bounds);
+            Level.InitLevel(0, LoadedWorldHitbox, Stuff, ref Bounds);
         }
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
@@ -51,6 +51,7 @@ namespace QuarantineJam
             foreach (PhysicalObject p in RemovedStuff) Stuff.Remove(p);
             RemovedStuff.Clear();
             foreach (PhysicalObject p in Stuff) p.Update(gameTime, this, player);
+            if (countBees() == 0 && player.IsOnGround(this)) player.CurrentState = Player.PlayerState.flip;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -84,6 +85,12 @@ namespace QuarantineJam
                 }
             }
             return collision;
+        }
+
+        public void NextLevel()
+        {
+            levelIndex++;
+            Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds);
         }
 
         public List<Rectangle> CheckCollisionReturnRectangleList(Rectangle rectangle, Vector2 movement)

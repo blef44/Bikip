@@ -80,32 +80,34 @@ namespace QuarantineJam
         {
 #if DEBUG
             KeyboardState ks = Keyboard.GetState();
-            if (ks.IsKeyDown(Keys.D)) CameraPosition.X -= 8;
-            if (ks.IsKeyDown(Keys.Q)) CameraPosition.X += 8;
-            if (ks.IsKeyDown(Keys.Z)) CameraPosition.Y += 8;
-            if (ks.IsKeyDown(Keys.S)) CameraPosition.Y -= 8;
+            if (ks.IsKeyDown(Keys.D)) CameraDestination.X += 8;
+            if (ks.IsKeyDown(Keys.Q)) CameraDestination.X -= 8;
+            if (ks.IsKeyDown(Keys.Z)) CameraDestination.Y -= 8;
+            if (ks.IsKeyDown(Keys.S)) CameraDestination.Y += 8;
             if (ks.IsKeyDown(Keys.NumPad9)) Zoom *= 1.05f;
             if (ks.IsKeyDown(Keys.NumPad8)) Zoom *= 0.95f;
 #endif
             if (!world.Bounds.Contains(ViewRectangle)) // camera oob
             {
-                if (ViewRectangle.Left < world.Bounds.Left) CameraPosition.X += world.Bounds.Left - ViewRectangle.Left;
-                if (ViewRectangle.Right > world.Bounds.Right) CameraPosition.X += world.Bounds.Right - ViewRectangle.Right;
-                if (ViewRectangle.Top < world.Bounds.Top) CameraPosition.Y += world.Bounds.Top - ViewRectangle.Top;
-                if (ViewRectangle.Bottom > world.Bounds.Bottom) CameraPosition.Y += world.Bounds.Bottom - ViewRectangle.Bottom;
+                CameraPosition = world.Bounds.Location.ToVector2();
+                CameraDestination = CameraPosition;
+            }
+            //else
+            {
+                if (player.Hurtbox.Center.Y < ViewRectangle.Center.Y - 100) MoveCamera(new Vector2(0, -5));
+                else if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100) MoveCamera(new Vector2(0, 10));
+
+                if (player.Hurtbox.Center.X > ViewRectangle.Center.X && player.PlayerDirection == 1) MoveCamera(new Vector2(10, 0));
+                else if (player.Hurtbox.Center.X < ViewRectangle.Center.X && player.PlayerDirection == -1) MoveCamera(new Vector2(-10, 0));
             }
 
-            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(CameraPosition.X * 0.2f + CameraDestination.X * 0.8f, CameraPosition.Y * 0.2f + CameraDestination.Y * 0.8f, 0);  ;
+            CameraPosition = CameraPosition * 0.5f + CameraDestination * 0.5f;
+            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(Zoom * (-CameraPosition.X), Zoom * (-CameraPosition.Y), 0);  ;
             ViewRectangle = new Rectangle(0, 0, 1280, 720);
             ViewRectangle.Location = Vector2.Transform(ViewRectangle.Location.ToVector2(), Matrix.Invert(Camera)).ToPoint();
             ViewRectangle.Size = (ViewRectangle.Size.ToVector2() *1/Zoom).ToPoint();
-            //ViewRectangle.Size = Vector2.Transform(ViewRectangle.Size.ToVector2(), Matrix.Invert(Camera)).ToPoint();
             //ViewRectangle.Inflate(-128 * 1/Zoom, -72 * 1/Zoom);
-            if (player.Hurtbox.Center.Y < ViewRectangle.Center.Y - 100) MoveCamera(new Vector2(0, 5));
-            else if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100) MoveCamera(new Vector2(0, -10));
-
-            if (player.Hurtbox.Center.X > ViewRectangle.Center.X && player.PlayerDirection == 1) MoveCamera(new Vector2(-10, 0));
-            else if (player.Hurtbox.Center.X < ViewRectangle.Center.X && player.PlayerDirection == -1) MoveCamera(new Vector2(10, 0));
+           
 
 
 
@@ -127,8 +129,9 @@ namespace QuarantineJam
 
             world.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            //DrawRectangle(spriteBatch, ViewRectangle, Color.Red * 0.5f);
-            //DrawRectangle(spriteBatch, world.Bounds, Color.Green * 0.5f);
+            DrawRectangle(spriteBatch, ViewRectangle, Color.Red * 0.5f);
+            DrawRectangle(spriteBatch, world.Bounds, Color.Green * 0.5f);
+            DrawRectangle(spriteBatch, new Rectangle((int)CameraPosition.X, (int)CameraPosition.Y, 15, 15), Color.Black);
 
             spriteBatch.End();
             spriteBatch.Begin();
@@ -156,9 +159,10 @@ namespace QuarantineJam
 
         private void MoveCamera(Vector2 Movement)
         {
-            ViewRectangle.Offset(-Movement * 2f);
-            if (world.Bounds.Contains(ViewRectangle)) CameraDestination += Movement;
             ViewRectangle.Offset(Movement * 2f);
+            if (world.Bounds.Contains(ViewRectangle)) CameraDestination += Movement;
+            else CameraDestination = CameraPosition;
+            ViewRectangle.Offset(-Movement * 2f);
         }
     }
 }
