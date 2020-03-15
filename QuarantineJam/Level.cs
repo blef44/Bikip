@@ -88,11 +88,11 @@ namespace QuarantineJam
 
                     break;
                 case 2:
-                    worldHitbox.AddRange(new List<Rectangle>
-                    {
-                        r(0, 720-100, 1280, 100)
+                    worldHitbox.AddRange(new List<Rectangle> {
+                        r(0, 720-100, 1600, 100),
+                        r(0, 720-2000, 50, 2000)
                     });
-                    Bounds = new Rectangle(0, 720 - 2000, 1280, 2000);
+                    Bounds = new Rectangle(0, 720 - 2000, 1600, 2000);
                     break;
             }
             if (Bounds == Rectangle.Empty) Bounds = new Rectangle(worldHitbox.Min(rec => rec.Left),
@@ -101,7 +101,7 @@ namespace QuarantineJam
                                                                      worldHitbox.Max(rec => rec.Bottom));
         }
 
-        public static List<PhysicalObject> BeesFilling(Rectangle toFill)
+        private static List<PhysicalObject> BeesFilling(Rectangle toFill)
         {
             List<PhysicalObject> BeesFilling = new List<PhysicalObject>() { };
             for (int i = toFill.Left; i < toFill.Right; i+= 40)

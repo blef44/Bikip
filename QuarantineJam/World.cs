@@ -33,7 +33,7 @@ namespace QuarantineJam
             NewStuff = new List<PhysicalObject>();
             RemovedStuff = new List<PhysicalObject>();
             Bounds = new Rectangle();
-            Level.InitLevel(1, LoadedWorldHitbox, Stuff, ref Bounds);
+            Level.InitLevel(2, LoadedWorldHitbox, Stuff, ref Bounds);
         }
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
