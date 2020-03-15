@@ -119,5 +119,18 @@ namespace QuarantineJam
             return collision;
         }
 
+        public int countBees()
+        {
+            int c = 0;
+            foreach(PhysicalObject o in Stuff)
+            {
+                if (o is Bee)
+                    c++;
+                if (o is Ruche)
+                    c += 0; // nombre d'abeilles par ruche
+            }
+            return c;
+        }
+
     }
 }

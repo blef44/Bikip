@@ -20,6 +20,7 @@ namespace QuarantineJam
         float Zoom = 0.8f;
         Player player;
         Matrix Camera;
+        SpriteFont rouliFont;
 
         public Game1()
         {
@@ -56,6 +57,7 @@ namespace QuarantineJam
             Player.LoadContent(Content);
             PhysicalObject.LoadContent(Content);
             rectangle = Content.Load<Texture2D>("texture_chelou");
+            rouliFont = Content.Load<SpriteFont>("Rouli");
 
             world = new World(player);
         }
@@ -117,6 +119,11 @@ namespace QuarantineJam
             world.Draw(spriteBatch);
             player.Draw(spriteBatch);
            // DrawRectangle(spriteBatch, ViewRectangle, Color.Red * 0.5f);
+
+            spriteBatch.End();
+            spriteBatch.Begin();
+
+            spriteBatch.DrawString(rouliFont, world.countBees().ToString(), new Vector2(50, 50), Color.Black);
 
             spriteBatch.End();
             base.Draw(gameTime);

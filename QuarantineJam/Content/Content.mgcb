@@ -127,6 +127,13 @@
 /processorParam:TextureFormat=Color
 /build:roll.png
 
+#begin Rouli.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Rouli.spritefont
+
 #begin ruche1.png
 /importer:TextureImporter
 /processor:TextureProcessor
