@@ -14,7 +14,7 @@ namespace QuarantineJam
     public class Player : PhysicalObject
     {
         private const float MaxSpeed = 11;
-        static Sprite idle, run, brake, fall, rise, roll;
+        static Sprite idle, run, brake, fall, rise, roll, top;
         //static SoundEffect ;
         public enum PlayerState { idle, walk, jump, doublejump } //etc
         public PlayerState CurrentState, PreviousState;
@@ -30,11 +30,12 @@ namespace QuarantineJam
         new public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             idle = new Sprite(2, 193, 168, 350, Content.Load<Texture2D>("player_idle"));
-            run = new Sprite(5, 193, 168, 70, Content.Load<Texture2D>("player_run"));
+            run = new Sprite(5, 193, 168, 55, Content.Load<Texture2D>("player_run"));
             brake = new Sprite(Content.Load<Texture2D>("brake"));
             rise = new Sprite(Content.Load<Texture2D>("rise"));
             fall = new Sprite(Content.Load<Texture2D>("fall"));
-            roll = new Sprite(6, 232, 168, 60, Content.Load<Texture2D>("roll"));
+            top = new Sprite(Content.Load<Texture2D>("top"));
+            roll = new Sprite(6, 232, 168, 50, Content.Load<Texture2D>("roll"));
         }
         public Player():base(new Vector2(40, 100), new Vector2(0,0))
         {
@@ -79,6 +80,7 @@ namespace QuarantineJam
                     else if (KbState.IsKeyDown(Input.Jump))
                     {
                         ApplyForce(new Vector2(0, -15f));
+                        SoundEffectPlayer.Play(jump, 1f, 0f);
                         if (Input.direction != 0) PlayerDirection = Input.direction;
                         CurrentState = PlayerState.jump;
                     }
@@ -89,6 +91,7 @@ namespace QuarantineJam
                         // Velocity = 0;
                         if (Input.direction != 0) PlayerDirection = Input.direction;
                         ApplyForce(new Vector2(0, -15f));
+                        SoundEffectPlayer.Play(jump, 1f, 0f);
                         CurrentState = PlayerState.jump;
                     }
                     else if (!IsOnGround(world)) CurrentState = PlayerState.jump;
@@ -112,6 +115,7 @@ namespace QuarantineJam
                     {
                         Velocity.Y = 0;
                         //if (Input.direction == 0) 
+                        SoundEffectPlayer.Play(jump, 1f, 0.5f);
                             ApplyForce(new Vector2(0, -15));
                         //else
                         //{
@@ -156,9 +160,9 @@ namespace QuarantineJam
                     }
                 case (PlayerState.jump):
                     {
-                        if (Velocity.Y < -4) CurrentSprite = rise;
-                        //else if (Velocity.Y > 4) CurrentSprite = fall;
-                        else CurrentSprite = fall;
+                        if (Velocity.Y < -1) CurrentSprite = rise;
+                        else if (Velocity.Y > 1) CurrentSprite = fall;
+                        else CurrentSprite = top;
                         break;
                     }
                 case (PlayerState.doublejump):
@@ -183,22 +187,20 @@ namespace QuarantineJam
             CurrentSprite.direction = PlayerDirection;
             CurrentSprite.UpdateFrame(gameTime);
 
-            PhysicalObject BeeToRemove = null;
             foreach (PhysicalObject o in world.Stuff)
             {
                 if (o is Bee b)
                 {
                     b.AttractFromPlayer(this);
-                    if (CheckCollision(b.Hurtbox, b.Velocity))
+                    if (Hurtbox.Intersects(b.Hurtbox))
                     {
                         //Console.WriteLine("collision between bee and player");
-                        BeeToRemove = b;
+                        world.RemovedStuff.Add(b);
+                        SoundEffectPlayer.Play(bee_collected, 0.8f, (float)(r.NextDouble() * 0.2));
                     }
                 }
                 // do something;
             }
-            if (BeeToRemove != null)
-                world.Stuff.Remove(BeeToRemove);
 
             prevKbState = KbState;
             base.Update(gameTime, world, this);

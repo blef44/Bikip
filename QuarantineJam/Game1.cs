@@ -88,6 +88,7 @@ namespace QuarantineJam
             player.Update(gameTime, world, player);
             world.Update(gameTime, player);
             Input.Update(Keyboard.GetState());
+            SoundEffectPlayer.Update();
             base.Update(gameTime);
         }
 

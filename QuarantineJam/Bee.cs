@@ -35,7 +35,7 @@ namespace QuarantineJam
             foreach (PhysicalObject p in world.Stuff)
             {
                 Vector2 distance = FeetPosition - p.FeetPosition;
-                if (p != this && p is Bee && distance.Length() <= 50)
+                if (p != this && p is Bee && distance.Length() <= 50 && Velocity.Length() < 5)
                 {
                     //Console.WriteLine("collision between two bees");
                     if (distance.Length() <= 0.0001f) distance = new Vector2(random.Next(0, 2) * 2 - 1, random.Next(0, 2) * 2 - 1);

@@ -49,6 +49,12 @@
 /processorParam:TextureFormat=Color
 /build:fall.png
 
+#begin highUp.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:highUp.mp3
+
 #begin player_idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -133,6 +139,12 @@
 /processorParam:TextureFormat=Color
 /build:ruche3.png
 
+#begin SUCCESS BEEPS Multi Echo Short 02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SUCCESS BEEPS Multi Echo Short 02.wav
+
 #begin template.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -168,4 +180,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:texture_chelou.png
+
+#begin top.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:top.png
 

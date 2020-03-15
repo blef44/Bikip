@@ -21,6 +21,7 @@ namespace QuarantineJam
         internal Vector2 HurtboxSize;
         internal Sprite PreviousSprite, CurrentSprite;
         public static Sprite bee, ruche1, ruche2, ruche3;
+        public static SoundEffect bee_collected, jump;
         internal int SpriteFrames = 0;
         internal static Random r = new Random();
         internal float WallBounceFactor, GroundBounceFactor = 0f, GroundFriction, AirFriction = 1f, Gravity, XTreshold = 0.1f;
@@ -32,6 +33,8 @@ namespace QuarantineJam
             ruche1 = new Sprite(Content.Load<Texture2D>("ruche1"));
             ruche2 = new Sprite(Content.Load<Texture2D>("ruche2"));
             ruche3 = new Sprite(Content.Load<Texture2D>("ruche3"));
+            bee_collected = Content.Load<SoundEffect>("SUCCESS BEEPS Multi Echo Short 02");
+            jump = Content.Load<SoundEffect>("highUp");
         }
         public PhysicalObject(Vector2 HurtboxSize, Vector2 FeetPosition, bool isParticle = false)
         {
