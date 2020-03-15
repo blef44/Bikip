@@ -11,9 +11,10 @@ using System.IO;
 
 namespace QuarantineJam
 {
-    class Ruche:PhysicalObject
+    class Ruche : PhysicalObject
     {
-        int bee_count, frame_cooldown;
+        public int bee_count { get; private set; }
+        private int frame_cooldown;
 
         public Ruche(Vector2 Spawn, int bee_count = 10):base(new Vector2(95, 60), Spawn)
         {

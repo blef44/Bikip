@@ -9,7 +9,7 @@ namespace QuarantineJam
     public static class Level
     {
         static Random random;
-        public static void InitLevel(int level, List<Rectangle> worldHitbox, List<PhysicalObject> stuff, Rectangle Bounds)
+        public static void InitLevel(int level, List<Rectangle> worldHitbox, List<PhysicalObject> stuff, ref Rectangle Bounds)
         {
             random = new Random(37);
             Rectangle r(int x, int y, int w, int h) => new Rectangle(x, y, w, h);
@@ -48,12 +48,13 @@ namespace QuarantineJam
                     stuff.Add(new Bee(new Vector2(1300, 400)));
                     stuff.Add(new Bee(new Vector2(1300, 400)));
                     stuff.Add(new Bee(new Vector2(1300, 400)));
-                    stuff.Add(new Ruche(new Vector2(500, 0), 250));
+                    stuff.Add(new Ruche(new Vector2(500, 0), 25));
                     foreach (PhysicalObject o in stuff)
                     {
                         o.FeetPosition += new Vector2(random.Next(-2, 2), random.Next(-2, 2));
                         //Console.WriteLine(o.FeetPosition);
                     }
+                    Bounds = new Rectangle(-400, -1100, 2950, 1240);
 
                     break;
 
@@ -85,6 +86,13 @@ namespace QuarantineJam
                     }
                     Bounds = new Rectangle(-400, -1100, 2950, 1240);
 
+                    break;
+                case 2:
+                    worldHitbox.AddRange(new List<Rectangle>
+                    {
+                        r(0, 720-100, 1280, 100)
+                    });
+                    Bounds = new Rectangle(0, 720 - 2000, 1280, 2000);
                     break;
             }
             if (Bounds == Rectangle.Empty) Bounds = new Rectangle(worldHitbox.Min(rec => rec.Left),
