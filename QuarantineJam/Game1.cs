@@ -99,9 +99,8 @@ namespace QuarantineJam
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin(SpriteSortMode.Immediate, transformMatrix: Camera);
+            spriteBatch.Begin(SpriteSortMode.Immediate, null,  SamplerState.LinearWrap, transformMatrix: Camera);
             GraphicsDevice.Clear(Color.LightGray);
-            GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
 
             world.Draw(spriteBatch);
             player.Draw(spriteBatch);
