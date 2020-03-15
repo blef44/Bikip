@@ -16,7 +16,7 @@ namespace QuarantineJam
         World world;
 
         Vector2 CameraDestination = new Vector2(0, 700), CameraPosition = new Vector2(0, 700);
-        Rectangle ViewRectangle;
+        public static Rectangle ViewRectangle;
         float Zoom = 0.8f;
         Player player;
         Matrix Camera;

@@ -32,7 +32,8 @@ namespace QuarantineJam
 
         public override void Update(GameTime gameTime, World world, Player player)
         {
-            foreach (PhysicalObject p in world.Stuff)
+            if (!world.Bounds.Contains(Hurtbox)) ApplyForce(-2 * Vector2.Normalize(Hurtbox.Center.ToVector2() - world.Bounds.Center.ToVector2()));
+            else foreach (PhysicalObject p in world.Stuff)
             {
                 Vector2 distance = FeetPosition - p.FeetPosition;
                 if (p != this && p is Bee && distance.Length() <= 50 && Velocity.Length() < 5)
