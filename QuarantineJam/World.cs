@@ -126,8 +126,8 @@ namespace QuarantineJam
             {
                 if (o is Bee)
                     c++;
-                if (o is Ruche)
-                    c += 0; // nombre d'abeilles par ruche
+                if (o is Ruche r)
+                    c += r.bee_count; // nombre d'abeilles par ruche
             }
             return c;
         }
