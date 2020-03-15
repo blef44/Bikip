@@ -72,7 +72,7 @@ namespace QuarantineJam
                     Bounds = new Rectangle(-400, -1100, 2950, 1240);
                     Spawn = new Vector2(0, 0);
                     break;
-                case 2:
+                case 2: // 3 beeboxs
                     worldHitbox.AddRange(new List<Rectangle> {
                             new Rectangle(-250, 0, 1030, 460) ,
                             new Rectangle(600, -230, 790, 1440) ,
@@ -85,45 +85,7 @@ namespace QuarantineJam
                     stuff.Add(new Ruche(new Vector2(700, -250), 20));
                     stuff.Add(new Ruche(new Vector2(-100, -400), 20, -1));
                     Bounds = new Rectangle(-500, -800, 1342, 964);
-                    break;
-                case 999:
-                    worldHitbox.Add(r(0,500,1000,300));
-
-                    List<Rectangle> LevelList = new List<Rectangle>()
-                    {
-                            new Rectangle(-920, -250, 570, 1060) ,
-                            new Rectangle(-920, -1170, 330, 1020) ,
-                            new Rectangle(370, -310, 260, 80) ,
-                            new Rectangle(-390, 0, 1040, 190) ,
-                            new Rectangle(-410, 590, 1780, 360) ,
-                            new Rectangle(1030, 280, 740, 670) ,
-                            new Rectangle(1440, -370, 330, 680) ,
-                            new Rectangle(1270, -50, 190, 360) ,
-                            new Rectangle(1560, -1030, 260, 690) ,
-                            new Rectangle(-900, -1380, 2070, 520) ,
-                            new Rectangle(1110, -1170, 610, 260) ,
-                            new Rectangle(920, -220, 110, 150) ,
-                    };
-                    List<Rectangle> newList = new List<Rectangle>() {};
-                    foreach (Rectangle re in LevelList)
-                    {
-                        re.Offset(new Vector2(200, 200));
-                        newList.Add(re);
-                    }
-                    worldHitbox.AddRange(newList);
-                    stuff.Add(new Bee(new Vector2(1300, 400)));
-                    stuff.Add(new Bee(new Vector2(1300, 400)));
-                    stuff.Add(new Bee(new Vector2(1300, 400)));
-                    stuff.Add(new Bee(new Vector2(1300, 400)));
-                    stuff.Add(new Bee(new Vector2(1300, 400)));
-                    stuff.Add(new Ruche(new Vector2(500, 0), 25));
-                    foreach (PhysicalObject o in stuff)
-                    {
-                        o.FeetPosition += new Vector2(random.Next(-2, 2), random.Next(-2, 2));
-                        //Console.WriteLine(o.FeetPosition);
-                    }
-                    Bounds = new Rectangle(-400, -1100, 2950, 1240);
-
+                    Spawn = new Vector2(200, -1);
                     break;
 
                 case 3: // niveau efflam
@@ -182,7 +144,7 @@ namespace QuarantineJam
                     stuff.Add(new Ruche(new Vector2(840, -160), 3));
                     stuff.AddRange(BeesFilling(new Rectangle(-125, -838, 1297, 259), 100));
                     Bounds = new Rectangle(-263, -999, 1655, 877);
-                    Spawn = new Vector2(200, -200);
+                    Spawn = new Vector2(500, -200);
                     break;
                 case 5: // ventilos intros
                     worldHitbox.AddRange(new List<Rectangle> {

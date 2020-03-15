@@ -94,12 +94,24 @@ namespace QuarantineJam
             }
             //else
 
-            if (player.Hurtbox.Center.X > ViewRectangle.Center.X && player.PlayerDirection == 1) MoveCamera(new Vector2(10, 0));
-            else if (player.Hurtbox.Center.X < ViewRectangle.Center.X && player.PlayerDirection == -1) MoveCamera(new Vector2(-10, 0));
+            if (player.Hurtbox.Center.X > ViewRectangle.Center.X && player.PlayerDirection == 1)
+            {
+                MoveCamera(new Vector2(10, 0));
+            }
+            else if (player.Hurtbox.Center.X < ViewRectangle.Center.X && player.PlayerDirection == -1)
+            {
+                MoveCamera(new Vector2(-10, 0));
+            }
 
 
-            if (player.Hurtbox.Center.Y < ViewRectangle.Center.Y - 100) MoveCamera(new Vector2(0, -10));
-            else if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100) MoveCamera(new Vector2(0, 10));
+            if (player.Hurtbox.Center.Y < ViewRectangle.Center.Y - 100)
+            {
+                MoveCamera(new Vector2(0, -10));
+            }
+            else if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100)
+            {
+                MoveCamera(new Vector2(0, 10));
+            }
 
 
 

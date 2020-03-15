@@ -19,7 +19,7 @@ namespace QuarantineJam
         private Player saved_player;
         public List<PhysicalObject> Stuff, NewStuff, RemovedStuff;
         public static Texture2D texture, ground, bg;
-        public int levelIndex = 6;
+        public int levelIndex = 3;
         public Vector2 Spawn;
            
 
