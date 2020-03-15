@@ -160,6 +160,7 @@ namespace QuarantineJam
                     stuff.Add(new Ventilateur(new Vector2(1530, -600)));
                     stuff.AddRange(BeesFilling(new Rectangle(1200, -485, 153, 112)));
                     stuff.AddRange(BeesFilling(new Rectangle(1262, -148, 309, 131)));
+                    stuff.AddRange(BeesFilling(new Rectangle(1000, -700, 309, 300)));
                     Bounds = new Rectangle(21, -850, 647, 530);
                     Spawn = new Vector2(330, -1);
                     break;
@@ -185,6 +186,28 @@ namespace QuarantineJam
                     stuff.AddRange(BeesFilling(new Rectangle(500, -410, 200, 300)));
                     stuff.AddRange(BeesFilling(new Rectangle(1300, -410, 180, 300)));
                     Bounds = new Rectangle(21, -850, 647, 530);
+                    Spawn = new Vector2(200, -1);
+                    break;
+                case 7: // ventilos et ruches
+                    worldHitbox.AddRange(new List<Rectangle> {
+new Rectangle(-260, -960, 350, 1760) ,
+                            new Rectangle(-160, -1230, 2680, 390) ,
+                            new Rectangle(60, -560, 240, 100) ,
+                            new Rectangle(630, -220, 330, 350) ,
+                            new Rectangle(740, -950, 90, 470) ,
+                            new Rectangle(1150, -580, 220, 80) ,
+                            new Rectangle(0, 0, 2360, 1200) ,
+                            new Rectangle(1750, -430, 640, 660) ,
+                            new Rectangle(2290, -960, 550, 1490) ,
+                    });
+                    stuff.Add(new Ventilateur(new Vector2(2230, -430)));
+                    stuff.Add(new Ventilateur(new Vector2(800, -220)));
+                    stuff.Add(new Ventilateur(new Vector2(1250, -580), 1));
+                    stuff.Add(new Ruche(new Vector2(1950, -440), 20));
+                    stuff.AddRange(BeesFilling(new Rectangle(915, -810, 470, 200), 60));
+                    stuff.AddRange(BeesFilling(new Rectangle(110, -814, 580, 227), 60));
+                    stuff.AddRange(BeesFilling(new Rectangle(1094, -254, 567, 129), 80));
+                    Bounds = new Rectangle(-11, -891, 2385, 931);
                     Spawn = new Vector2(200, -1);
                     break;
             }
