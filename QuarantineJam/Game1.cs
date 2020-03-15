@@ -14,7 +14,7 @@ namespace QuarantineJam
         public static Texture2D rectangle; // used for debug
 
         World world;
-        Vector2 CameraPosition;
+        Vector2 CameraPosition = new Vector2(0, 500);
         float Zoom = 0.8f;
         Player player;
         Matrix Camera;
@@ -83,6 +83,7 @@ namespace QuarantineJam
             if (ks.IsKeyDown(Keys.NumPad9)) Zoom *= 1.05f;
             if (ks.IsKeyDown(Keys.NumPad8)) Zoom *= 0.95f;
 #endif
+            
             Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(CameraPosition.X, CameraPosition.Y, 0);
             
             player.Update(gameTime, world, player);
@@ -112,7 +113,16 @@ namespace QuarantineJam
         public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangleToDraw, Color color, Texture2D texture = null)
         {
             if (texture == null) texture = rectangle;
-            spriteBatch.Draw(texture, rectangleToDraw, texture.Bounds, color, 0f, Vector2.Zero, default, default);
+            spriteBatch.Draw(texture, rectangleToDraw,
+                new Rectangle(rectangleToDraw.X % texture.Width,
+                              rectangleToDraw.Y % texture.Height,
+                              (int)(rectangleToDraw.Width),
+                              (int)(rectangleToDraw.Height)),
+                color,
+                0f,
+                new Vector2(0, 0),
+                SpriteEffects.None,
+                0f);
         }
     }
 }

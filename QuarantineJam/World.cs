@@ -12,12 +12,13 @@ namespace QuarantineJam
 {
     public class World
     {
+        public Rectangle Bounds;
         public List<Rectangle> LoadedWorldHitbox;
         //public static Sprite pipe_texture;
         private Random r;
         private Player saved_player;
         public List<PhysicalObject> Stuff, NewStuff, RemovedStuff;
-        public static Texture2D texture;
+        public static Texture2D texture, ground, bg;
 
            
 
@@ -31,12 +32,14 @@ namespace QuarantineJam
             Stuff = new List<PhysicalObject>();
             NewStuff = new List<PhysicalObject>();
             RemovedStuff = new List<PhysicalObject>();
-            Level.InitLevel(0, LoadedWorldHitbox, Stuff);
+            Level.InitLevel(1, LoadedWorldHitbox, Stuff, Bounds);
         }
 
         public static void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             texture = Content.Load<Texture2D>("texture");
+            ground = Content.Load<Texture2D>("ground");
+            bg = Content.Load<Texture2D>("bg");
         }
 
 
@@ -51,6 +54,7 @@ namespace QuarantineJam
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Game1.DrawRectangle(spriteBatch, new Rectangle(-2000, -2000, 10000, 5000), Color.White, bg);
             List<Rectangle> InteriorDisplay = new List<Rectangle>() { };
             foreach (Rectangle r in LoadedWorldHitbox) Game1.DrawRectangle(spriteBatch, r, Color.Black);
             foreach (Rectangle r in LoadedWorldHitbox)
@@ -59,7 +63,7 @@ namespace QuarantineJam
                 rect.Inflate(-2, -2);
                 InteriorDisplay.Add(rect);
             }
-            foreach (Rectangle r in InteriorDisplay) Game1.DrawRectangle(spriteBatch, r, Color.White, texture);
+            foreach (Rectangle r in InteriorDisplay) Game1.DrawRectangle(spriteBatch, r, Color.White, ground);
 
             foreach (PhysicalObject p in Stuff) p.Draw(spriteBatch);
         }

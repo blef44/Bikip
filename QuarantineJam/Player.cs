@@ -133,6 +133,8 @@ namespace QuarantineJam
                     break;
                 case (PlayerState.doublejump):
                 {
+                        if (Velocity.Y < 0 && Velocity.X != 0) PlayerDirection = Math.Sign(Velocity.X); // raising
+
                         if (IsOnGround(world)) CurrentState = PlayerState.idle;
                         else if (Input.direction != 0) // player is inputing a direction (either left or right)
                         {
@@ -196,7 +198,7 @@ namespace QuarantineJam
                     {
                         //Console.WriteLine("collision between bee and player");
                         world.RemovedStuff.Add(b);
-                        SoundEffectPlayer.Play(bee_collected, 0.8f, (float)(r.NextDouble() * 0.2));
+                        SoundEffectPlayer.Play(bee_collected, 0.08f, (float)(r.NextDouble() * 0.2));
                     }
                 }
                 // do something;
