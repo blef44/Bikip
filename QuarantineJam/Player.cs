@@ -14,9 +14,9 @@ namespace QuarantineJam
     public class Player : PhysicalObject
     {
         private const float MaxSpeed = 11;
-        static Sprite idle, run, brake, fall, rise, roll, top;
+        static Sprite idle, run, brake, fall, rise, roll, top, flip;
         //static SoundEffect ;
-        public enum PlayerState { idle, walk, jump, doublejump } //etc
+        public enum PlayerState { idle, walk, jump, doublejump, flip } //etc
         public PlayerState CurrentState, PreviousState;
         public int state_frames;
         private List<Rectangle> LandingGroundCandidate;
@@ -36,6 +36,7 @@ namespace QuarantineJam
             fall = new Sprite(Content.Load<Texture2D>("fall"));
             top = new Sprite(Content.Load<Texture2D>("top"));
             roll = new Sprite(6, 232, 168, 50, Content.Load<Texture2D>("roll"));
+            flip = new Sprite(14, 193, 239, 120, Content.Load<Texture2D>("flip"), 1, false);
         }
         public Player():base(new Vector2(40, 100), new Vector2(0,0))
         {
@@ -142,6 +143,11 @@ namespace QuarantineJam
                         }
                         break;
                 }
+                case (PlayerState.flip):
+                    {
+                        if (CurrentSprite.isOver) ;//do something like next level;
+                        break;
+                    }
             }
             //
             // SPRITE DETERMINATION
@@ -171,6 +177,11 @@ namespace QuarantineJam
                     {
                         if (Velocity.Y < 3) CurrentSprite = roll;
                         else CurrentSprite = fall;
+                        break;
+                    }
+                case (PlayerState.flip):
+                    {
+                        CurrentSprite = flip;
                         break;
                     }
             }
