@@ -139,6 +139,25 @@ namespace QuarantineJam
                     stuff.Add(new Ruche(new Vector2(650, 50), 5));
                     Bounds = new Rectangle(0, 720 - 1600, 1600, 1600);
                     break;
+                case 4: // level bees à guider
+                    worldHitbox.AddRange(new List<Rectangle> {
+                            new Rectangle(460, -460, 160, 30) ,
+                            new Rectangle(590, -450, 30, 110) ,
+                            new Rectangle(690, -530, 30, 90) ,
+                            new Rectangle(590, -370, 150, 270) ,
+                            new Rectangle(820, -470, 30, 350) ,
+                            new Rectangle(-530, -910, 340, 1400) ,
+                            new Rectangle(1230, -1230, 850, 1200) ,
+                            new Rectangle(-520, -1400, 1940, 530) ,
+                            new Rectangle(350, -550, 370, 30) ,
+                            new Rectangle(700, -470, 130, 30) ,
+                            new Rectangle(350, -530, 30, 170) ,
+                            new Rectangle(-220, -160, 2060, 500) ,
+                    });
+                    stuff.Add(new Ruche(new Vector2(840, -160), 3));
+                    stuff.AddRange(BeesFilling(new Rectangle(-125, -838, 1297, 259), 100));
+                    Bounds = new Rectangle(-263, -999, 1655, 877);
+                    break;
             }
            // if (Bounds == Rectangle.Empty) Bounds = new Rectangle(worldHitbox.Min(rec => rec.Left),
            //                                                          worldHitbox.Min(rec => rec.Top),
@@ -146,12 +165,12 @@ namespace QuarantineJam
            //                                                          worldHitbox.Max(rec => rec.Bottom) - worldHitbox.Min(rec => rec.Top));
         }
 
-        private static List<PhysicalObject> BeesFilling(Rectangle toFill)
+        private static List<PhysicalObject> BeesFilling(Rectangle toFill, int spaceBetweenBees = 40)
         {
             List<PhysicalObject> BeesFilling = new List<PhysicalObject>() { };
-            for (int i = toFill.Left; i < toFill.Right; i+= 40)
+            for (int i = toFill.Left; i < toFill.Right; i+= spaceBetweenBees)
             {
-                for (int j = toFill.Top; j < toFill.Bottom; j += 40)
+                for (int j = toFill.Top; j < toFill.Bottom; j += spaceBetweenBees)
                 {
                     BeesFilling.Add(new Bee(new Vector2(i, j)));
                 }

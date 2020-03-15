@@ -62,10 +62,9 @@ namespace QuarantineJam
 
         public void AttractFromPlayer(Player player)
         {
-            Vector2 distance = (player.FeetPosition - new Vector2(0, player.HurtboxSize.Y / 2)) - (FeetPosition - new Vector2(0, HurtboxSize.Y / 2));
+            Vector2 distance = player.Hurtbox.Center.ToVector2() - Hurtbox.Center.ToVector2() ;
             if ((distance).Length() <= 200)
             {
-
                 ApplyForce(distance/distance.Length()/distance.Length() * 40);
             }
         }

@@ -132,6 +132,7 @@ namespace QuarantineJam
             //DrawRectangle(spriteBatch, ViewRectangle, Color.Red * 0.5f);
             //DrawRectangle(spriteBatch, world.Bounds, Color.Green * 0.5f);
             //DrawRectangle(spriteBatch, new Rectangle((int)CameraPosition.X, (int)CameraPosition.Y, 15, 15), Color.Black);
+            foreach (PhysicalObject p in world.Stuff) DrawRectangle(spriteBatch, p.Hurtbox, Color.Red * 0.4f);
 
             spriteBatch.End();
             spriteBatch.Begin();
