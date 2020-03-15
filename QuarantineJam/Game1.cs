@@ -14,7 +14,9 @@ namespace QuarantineJam
         public static Texture2D rectangle; // used for debug
 
         World world;
-        Vector2 CameraPosition = new Vector2(0, 500);
+
+        Vector2 CameraDestination = new Vector2(0, 500), CameraPosition = new Vector2(0, 500);
+        Rectangle ViewRectangle;
         float Zoom = 0.8f;
         Player player;
         Matrix Camera;
@@ -38,7 +40,7 @@ namespace QuarantineJam
             // TODO: Add your initialization logic here
             player = new Player();
             
-            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(200, 400, 0);
+            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(200, 0, 0);
             base.Initialize();
         }
 
@@ -83,9 +85,19 @@ namespace QuarantineJam
             if (ks.IsKeyDown(Keys.NumPad9)) Zoom *= 1.05f;
             if (ks.IsKeyDown(Keys.NumPad8)) Zoom *= 0.95f;
 #endif
-            
-            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(CameraPosition.X, CameraPosition.Y, 0);
-            
+
+            Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(CameraPosition.X * 0.2f + CameraDestination.X * 0.8f, CameraPosition.Y * 0.2f + CameraDestination.Y * 0.8f, 0);  ;
+            ViewRectangle = new Rectangle(0, 0, 1280, 720);
+            ViewRectangle.Location = Vector2.Transform(ViewRectangle.Location.ToVector2(), Matrix.Invert(Camera)).ToPoint();
+            ViewRectangle.Size = (ViewRectangle.Size.ToVector2() *1/Zoom).ToPoint();
+            //ViewRectangle.Size = Vector2.Transform(ViewRectangle.Size.ToVector2(), Matrix.Invert(Camera)).ToPoint();
+            ViewRectangle.Inflate(-128 * 1/Zoom, -72 * 1/Zoom);
+            if (player.Hurtbox.Center.Y < ViewRectangle.Center.Y - 100) MoveCamera(new Vector2(0, 5));
+            else if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100) MoveCamera(new Vector2(0, -10));
+
+            if (player.Hurtbox.Center.X > ViewRectangle.Center.X && player.PlayerDirection == 1) MoveCamera(new Vector2(-10, 0));
+            else if (player.Hurtbox.Center.X < ViewRectangle.Center.X && player.PlayerDirection == -1) MoveCamera(new Vector2(10, 0));
+
             player.Update(gameTime, world, player);
             world.Update(gameTime, player);
             Input.Update(Keyboard.GetState());
@@ -104,6 +116,7 @@ namespace QuarantineJam
 
             world.Draw(spriteBatch);
             player.Draw(spriteBatch);
+           // DrawRectangle(spriteBatch, ViewRectangle, Color.Red * 0.5f);
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -122,6 +135,13 @@ namespace QuarantineJam
                 new Vector2(0, 0),
                 SpriteEffects.None,
                 0f);
+        }
+
+        private void MoveCamera(Vector2 Movement)
+        {
+            ViewRectangle.Offset(-Movement * 2f);
+            if (world.Bounds.Contains(ViewRectangle)) CameraDestination += Movement;
+            ViewRectangle.Offset(Movement * 2f);
         }
     }
 }
