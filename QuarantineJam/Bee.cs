@@ -18,6 +18,7 @@ namespace QuarantineJam
             brownianPosition = new Vector2(0, 0);
             CurrentSprite = new Sprite(bee);
             AirFriction = 0.95f;
+            GroundFriction = 1;
             XTreshold = 0;
         }
 
@@ -26,6 +27,7 @@ namespace QuarantineJam
             brownianPosition = new Vector2(0, 0);
             CurrentSprite = new Sprite(bee);
             AirFriction = 0.95f;
+            GroundFriction = 1;
             Velocity = Speed;
             XTreshold = 0;
         }
