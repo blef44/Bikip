@@ -9,7 +9,7 @@ namespace QuarantineJam
     public static class Level
     {
         static Random random;
-        public static void InitLevel(int level, List<Rectangle> worldHitbox, List<PhysicalObject> stuff, ref Rectangle Bounds, Vector2 Spawn)
+        public static void InitLevel(int level, List<Rectangle> worldHitbox, List<PhysicalObject> stuff, ref Rectangle Bounds, ref Vector2 Spawn)
         {
             random = new Random(37);
             Rectangle r(int x, int y, int w, int h) => new Rectangle(x, y, w, h);
@@ -127,17 +127,41 @@ namespace QuarantineJam
 
                 case 3:
                     worldHitbox.AddRange(new List<Rectangle> {
-                        r(-5, 720-100, 1610, 100),
-                        r(-5, 720-2000, 55, 2000),
-                        r(1600-50, 720-2000, 55, 2000),
-                        //r(0, 720-2050, 1600, 50),
+                        r(-150, 100, 1630, 100),
+                        r(-150, -1650, 55, 1750),
+                        r(1425, -1650, 55, 1750),
+                        r(-150, -1655, 1700, 55),
 
-                        r(0, -200, 300, 50),
-                        r(0, 400, 6000, 50),
-                        r(600, 100, 100, 50)
+                        r(-100,-350,200,50),
+                        r(100,-450,50,350),
+                        r(1380,-200,50,300),
+                        r(1100,-200,100,50),
+                        r(600,-500,100,50),
+                        r(-100,-750,100,50),
+                        r(300,-1050,500,50),
+                        r(0,-1300,100,50),
+                        r(1300,-1150,130,50),
+                        r(700,-1600,50,300),
+                        r(700,-1300,400,50),
+                        r(950,-1500,150,50),
+                        r(1050,-1600,50,150)
                     });
-                    stuff.Add(new Ruche(new Vector2(650, 50), 5));
-                    Bounds = new Rectangle(0, 720 - 1600, 1600, 1600);
+                    stuff.AddRange(new List<PhysicalObject>
+                    {
+                        new Bee(new Vector2(0,-250)),
+                        new Bee(new Vector2(0,-400)),
+                        new Bee(new Vector2(650,-550)),
+                        new Bee(new Vector2(50,-1350)),
+                        new Bee(new Vector2(1350,-1200)),
+                        new Bee(new Vector2(1000,-1550)),
+                        new Ruche(new Vector2(1150,0),50,-1)
+                    });
+                    stuff.AddRange(BeesFilling(new Rectangle(250,-200,700,250)));
+                    stuff.AddRange(BeesFilling(new Rectangle(1150,-1000,1,800)));
+                    stuff.AddRange(BeesFilling(new Rectangle(-50,-1200,1,400)));
+                    stuff.AddRange(BeesFilling(new Rectangle(300,-1100,500,1)));
+                    stuff.AddRange(BeesFilling(new Rectangle(300,-1350,400,1)));
+                    Bounds = new Rectangle(-150, -1650, 1630, 1800);
                     break;
                 case 4: // level bees à guider
                     worldHitbox.AddRange(new List<Rectangle> {

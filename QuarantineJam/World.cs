@@ -19,7 +19,7 @@ namespace QuarantineJam
         private Player saved_player;
         public List<PhysicalObject> Stuff, NewStuff, RemovedStuff;
         public static Texture2D texture, ground, bg;
-        public int levelIndex = 4;
+        public int levelIndex = 3;
         public Vector2 Spawn;
            
 
@@ -34,7 +34,7 @@ namespace QuarantineJam
             NewStuff = new List<PhysicalObject>();
             RemovedStuff = new List<PhysicalObject>();
             Bounds = new Rectangle();
-            Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds, Spawn);
+            Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds, ref Spawn);
             player.FeetPosition = Spawn;
         }
 
@@ -92,7 +92,7 @@ namespace QuarantineJam
         public void NextLevel(Player player)
         {
             levelIndex++;
-            Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds, Spawn);
+            Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds, ref Spawn);
             player.FeetPosition = Spawn;
         }
 
