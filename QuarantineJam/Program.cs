@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuarantineJam
+namespace Bikip
 {
 #if WINDOWS || LINUX
     /// <summary>

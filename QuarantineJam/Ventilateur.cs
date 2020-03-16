@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using System.IO;
 
-namespace QuarantineJam
+namespace Bikip
 {
     class Ventilateur:PhysicalObject
     {

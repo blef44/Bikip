@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using System.IO;
 
 
-namespace QuarantineJam
+namespace Bikip
 {
     public class PhysicalObject
     {

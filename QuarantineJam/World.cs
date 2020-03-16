@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using System.IO;
 
 
-namespace QuarantineJam
+namespace Bikip
 {
     public class World
     {
@@ -19,7 +19,7 @@ namespace QuarantineJam
         private Player saved_player;
         public List<PhysicalObject> Stuff, NewStuff, RemovedStuff;
         public static Texture2D texture, ground, bg;
-        public int levelIndex = 10;
+        public int levelIndex = 0;
         public Vector2 Spawn;
            
 
@@ -94,6 +94,7 @@ namespace QuarantineJam
             levelIndex++;
             Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds, ref Spawn);
             player.FeetPosition = Spawn;
+            if (levelIndex == 9) ;
         }
 
         public List<Rectangle> CheckCollisionReturnRectangleList(Rectangle rectangle, Vector2 movement)

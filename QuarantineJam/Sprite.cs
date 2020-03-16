@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace QuarantineJam
+namespace Bikip
 {
     /// <summary>
     /// Un sprite est une image, animée ou non. 

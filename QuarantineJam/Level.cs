@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using System.Linq;
 using System.Text;
 
-namespace QuarantineJam
+namespace Bikip
 {
     public static class Level
     {
@@ -210,7 +210,7 @@ namespace QuarantineJam
                     Bounds = new Rectangle(-11, -891, 2385, 931);
                     Spawn = new Vector2(200, -1);
                     break;
-                    case 10: // the end
+                case 8: // the end
             {
                     worldHitbox.AddRange(new List<Rectangle> {
                             new Rectangle(-260, -960, 350, 1760) ,

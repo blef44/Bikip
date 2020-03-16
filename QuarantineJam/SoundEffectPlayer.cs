@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Audio;
 
-namespace QuarantineJam
+namespace Bikip
 {
     public static class SoundEffectPlayer
     {

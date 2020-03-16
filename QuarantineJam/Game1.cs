@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace QuarantineJam
+namespace Bikip
 {
     /// <summary>
     /// This is the main type for your game.
@@ -134,6 +134,9 @@ namespace QuarantineJam
             world.Update(gameTime, player);
             Input.Update(Keyboard.GetState());
             SoundEffectPlayer.Update();
+
+            if (world.levelIndex == 9)
+                Exit();
             base.Update(gameTime);
         }
 

@@ -9,8 +9,8 @@
     <ProjectGuid>{BC15E793-0A5B-450D-AB4A-3688563FA8BB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QuarantineJam</RootNamespace>
-    <AssemblyName>QuarantineJam</AssemblyName>
+    <RootNamespace>Bikip</RootNamespace>
+    <AssemblyName>Bikip</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
