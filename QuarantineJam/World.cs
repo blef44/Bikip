@@ -94,7 +94,6 @@ namespace Bikip
             levelIndex++;
             Level.InitLevel(levelIndex, LoadedWorldHitbox, Stuff, ref Bounds, ref Spawn);
             player.FeetPosition = Spawn;
-            if (levelIndex == 9) ;
         }
 
         public List<Rectangle> CheckCollisionReturnRectangleList(Rectangle rectangle, Vector2 movement)

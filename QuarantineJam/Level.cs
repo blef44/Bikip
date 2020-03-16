@@ -240,7 +240,7 @@ namespace Bikip
                         stuff.AddRange(BeesFilling(new Rectangle(1529, -625, 185, 9)));
 
                         stuff.Add(new Ruche(new Vector2(2630, -240)));
-                        Bounds = new Rectangle(-4, -750, 2865, 829);
+                        Bounds = new Rectangle(-200, -850, 3865, 1829);
                         Spawn = new Vector2(200, -1);
                         break;
         }
