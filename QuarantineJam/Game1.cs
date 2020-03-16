@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace QuarantineJam
 {
@@ -90,27 +91,31 @@ namespace QuarantineJam
             if (!world.Bounds.Contains(ViewRectangle)) // camera oob
             {
                 CameraPosition = world.Bounds.Location.ToVector2();
+                ViewRectangle.Location = world.Bounds.Location;
                 CameraDestination = CameraPosition;
             }
             //else
 
-            if (player.Hurtbox.Center.X > ViewRectangle.Center.X && player.PlayerDirection == 1)
+            if (player.Hurtbox.Center.X > ViewRectangle.Center.X)
             {
                 MoveCamera(new Vector2(10, 0));
+                Console.WriteLine("move camera to the right");
             }
-            else if (player.Hurtbox.Center.X < ViewRectangle.Center.X && player.PlayerDirection == -1)
+            if (player.Hurtbox.Center.X < ViewRectangle.Center.X)
             {
                 MoveCamera(new Vector2(-10, 0));
+                Console.WriteLine("move camera to the left");
             }
-
-
+            
             if (player.Hurtbox.Center.Y < ViewRectangle.Center.Y - 100)
             {
                 MoveCamera(new Vector2(0, -10));
+                Console.WriteLine("move camera up");
             }
-            else if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100)
+            if (player.Hurtbox.Center.Y > ViewRectangle.Center.Y + 100)
             {
                 MoveCamera(new Vector2(0, 10));
+                Console.WriteLine("move camera down");
             }
 
 
@@ -118,7 +123,7 @@ namespace QuarantineJam
             CameraPosition = CameraPosition * 0.5f + CameraDestination * 0.5f;
             Camera = Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(Zoom * (-CameraPosition.X), Zoom * (-CameraPosition.Y), 0);  ;
             ViewRectangle = new Rectangle(0, 0, 1280, 720);
-            ViewRectangle.Location = Vector2.Transform(ViewRectangle.Location.ToVector2(), Matrix.Invert(Camera)).ToPoint();
+            ViewRectangle.Location = (Vector2.Transform(ViewRectangle.Location.ToVector2(), Matrix.Invert(Camera)) + new Vector2(0,1)).ToPoint();
             ViewRectangle.Size = (ViewRectangle.Size.ToVector2() *1/Zoom).ToPoint();
             //ViewRectangle.Inflate(-128 * 1/Zoom, -72 * 1/Zoom);
            
@@ -174,10 +179,18 @@ namespace QuarantineJam
 
         private void MoveCamera(Vector2 Movement)
         {
-            ViewRectangle.Offset(Movement * 2f);
-            if (world.Bounds.Contains(ViewRectangle)) CameraDestination += Movement;
-            else CameraDestination = CameraPosition;
-            ViewRectangle.Offset(-Movement * 2f);
+            Rectangle test = ViewRectangle;
+            test.Offset(2 * Movement);
+            if (world.Bounds.Contains(test))
+            {
+                Console.WriteLine("success of camera movement");
+                CameraDestination += Movement;
+            }
+            else
+            {
+                Console.WriteLine("failure of camera movement");
+                CameraDestination = CameraPosition;
+            }
         }
     }
 }
